@@ -1,0 +1,11 @@
+spring.application.name=contactsphere
+server.port=8081
+
+# MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/contactsphere
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+# JPA
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
