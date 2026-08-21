@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>My Contacts</title>
+</head>
+
+<body>
+
+<div id="content">
+
+    <div class="max-w-screen-xl mx-auto px-4 py-8">
+
+        <div class="mb-6">
+
+    <div class="flex items-center justify-between mb-4">
+
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            My Contacts
+        </h1>
+
+        <a th:href="@{/contacts/add}"
+           class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
+            Add Contact
+        </a>
+
+    </div>
+
+    <!-- Search -->
+    <form th:action="@{/contacts}"
+          method="get"
+          class="flex gap-2">
+
+        <input type="text"
+               name="keyword"
+               th:value="${keyword}"
+               placeholder="Search contacts..."
+               class="flex-1 px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white">
+
+        <button type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2">
+            Search
+        </button>
+
+    </form>
+
+</div>
+
+        <!-- No contacts -->
+        <div th:if="${#lists.isEmpty(contacts)}"
+             class="text-gray-500 dark:text-gray-300">
+            No contacts found.
+        </div>
+
+        <!-- Contact cards -->
+        <div th:unless="${#lists.isEmpty(contacts)}"
+             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div th:each="contact : ${contacts}"
+                 class="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
+
+                <a th:href="@{'/contacts/' + ${contact.id}}"
+                    class="text-xl font-semibold text-gray-900 dark:text-white hover:text-blue-600">
+                    <span th:text="${contact.name}">Contact Name</span>
+                </a>
+
+                <p class="text-gray-500 mt-2"
+                   th:text="${contact.email}">
+                    Email
+                </p>
+
+                <p class="text-gray-500 mt-1"
+                   th:text="${contact.phoneNumber}">
+                    Phone
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    console.log("Contacts page");
+</script>
+
+</body>
+</html>

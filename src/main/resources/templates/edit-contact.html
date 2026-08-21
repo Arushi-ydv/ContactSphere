@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Edit Contact</title>
+</head>
+
+<body>
+
+<div id="content">
+
+    <div class="max-w-screen-md mx-auto px-4 py-8">
+
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Edit Contact
+        </h1>
+
+        <form th:action="@{'/contacts/' + ${contact.id} + '/update'}"
+              th:object="${contact}"
+              method="post"
+              class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+
+            <!-- CSRF -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <!-- Contact ID -->
+            <input type="hidden"
+                   th:field="*{id}">
+
+            <!-- Name -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Name
+                </label>
+
+                <input type="text"
+                       th:field="*{name}"
+                       required
+                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
+                       placeholder="Enter contact name">
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Email
+                </label>
+
+                <input type="email"
+                       th:field="*{email}"
+                       required
+                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
+                       placeholder="Enter email">
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Phone Number
+                </label>
+
+                <input type="text"
+                       th:field="*{phoneNumber}"
+                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
+                       placeholder="Enter phone number">
+            </div>
+
+            <!-- Address -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Address
+                </label>
+
+                <input type="text"
+                       th:field="*{address}"
+                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
+                       placeholder="Enter address">
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Description
+                </label>
+
+                <textarea th:field="*{description}"
+                          rows="4"
+                          class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
+                          placeholder="Write something about this contact">
+                </textarea>
+            </div>
+
+            <!-- Favourite -->
+            <div class="mb-5">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox"
+                           th:field="*{favourite}">
+
+                    <span class="text-gray-900 dark:text-white">
+                        Favourite
+                    </span>
+                </label>
+            </div>
+
+            <div class="flex gap-3">
+
+                <button type="submit"
+                        class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                    Update Contact
+                </button>
+
+                <a th:href="@{'/contacts/' + ${contact.id}}"
+                   class="text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    console.log("Edit Contact page");
+</script>
+
+</body>
+</html>
