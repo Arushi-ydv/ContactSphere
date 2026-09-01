@@ -44,6 +44,18 @@
         Welcome, <span th:text="${loggedInUser}"></span>
     </span>
 
+    <!-- Profile -->
+    <a th:href="@{/profile}"
+       class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2">
+        Profile
+    </a>
+
+    <!-- Settings -->
+<a th:href="@{/settings}"
+   class="text-white bg-gray-600 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2">
+    Settings
+</a>
+
     <!--Logout-->
     <form th:action="@{/logout}" method="post">
         <input type="hidden"

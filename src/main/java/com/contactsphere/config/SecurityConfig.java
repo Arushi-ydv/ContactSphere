@@ -50,7 +50,8 @@ public class SecurityConfig {
                 "/login",
                 "/css/**",
                 "/js/**",
-                "/images/**"
+                "/images/**",
+                "/verify-email"
                 ).permitAll()
                 .anyRequest().authenticated()
         )
@@ -60,6 +61,7 @@ public class SecurityConfig {
             .permitAll()
         )
         .oauth2Login(oauth2 -> oauth2
+            .loginPage("/login")
             .userInfoEndpoint(userInfo -> userInfo
                 .userService(customOAuth2UserService)
             )

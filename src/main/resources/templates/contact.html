@@ -1,17 +1,143 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
-    <head>
-        <title>Contact Us page</title>
-    </head>
-    <body>
-        <div id="content">
-            <h1>Welcome to Contact page</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores inventore, sequi corrupti earum dolore odio nam praesentium blanditiis debitis maxime adipisci excepturi quaerat sit aut in tempore ipsa iure molestiae!
+
+<head>
+    <title>Contact Us</title>
+</head>
+
+<body>
+
+<div id="content">
+
+    <div class="max-w-6xl mx-auto px-6 py-10">
+
+        <!-- Heading -->
+        <div class="text-center mb-10">
+
+            <h1 class="text-4xl font-bold text-heading mb-3">
+                Contact Us
+            </h1>
+
+            <p class="text-gray-400">
+                Have a question or need help? Feel free to get in touch with us.
             </p>
+
         </div>
-        <script>
-            console.log("Contact US Page");
-        </script>
-        
-    </body>
+
+
+        <!-- Contact Information -->
+        <div class="grid grid-cols-12 gap-6">
+
+            <!-- Email -->
+            <div class="col-span-12 md:col-span-4">
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+
+                    <div class="text-3xl mb-4">
+                        📧
+                    </div>
+
+                    <h2 class="text-xl font-semibold text-heading mb-2">
+                        Email
+                    </h2>
+
+                    <p class="text-gray-400 mb-3">
+                        You can reach us through email.
+                    </p>
+
+                    <a href="mailto:contactsphere@gmail.com"
+                       class="text-blue-500 hover:underline">
+                        contactsphere@gmail.com
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Phone -->
+            <div class="col-span-12 md:col-span-4">
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+
+                    <div class="text-3xl mb-4">
+                        📞
+                    </div>
+
+                    <h2 class="text-xl font-semibold text-heading mb-2">
+                        Phone
+                    </h2>
+
+                    <p class="text-gray-400 mb-3">
+                        We're available during business hours.
+                    </p>
+
+                    <a href="tel:+919999999999"
+                       class="text-blue-500 hover:underline">
+                        +91 99999 99999
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Location -->
+            <div class="col-span-12 md:col-span-4">
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+
+                    <div class="text-3xl mb-4">
+                        📍
+                    </div>
+
+                    <h2 class="text-xl font-semibold text-heading mb-2">
+                        Location
+                    </h2>
+
+                    <p class="text-gray-400">
+                        India
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- About ContactSphere -->
+        <div class="mt-8">
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+
+                <h2 class="text-2xl font-semibold text-heading mb-4">
+                    Get in Touch
+                </h2>
+
+                <p class="text-gray-400 leading-7">
+                    ContactSphere helps you manage your contacts in one place.
+                    You can organize contact information, manage favourites,
+                    add social links, and keep your important contact details
+                    easily accessible.
+                </p>
+
+                <p class="text-gray-400 leading-7 mt-4">
+                    If you have any questions, suggestions, or feedback about
+                    ContactSphere, feel free to contact us.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    console.log("Contact Us Page");
+</script>
+
+</body>
 </html>

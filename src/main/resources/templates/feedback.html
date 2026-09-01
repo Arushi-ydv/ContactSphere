@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback - ContactSphere</title>
+</head>
+
+<body>
+
+    <h1>Give Your Feedback</h1>
+
+    <form th:action="@{/feedback}" method="post">
+
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label>Feedback:</label>
+            <br>
+            <textarea name="message" rows="5" cols="40" required></textarea>
+        </div>
+
+        <br>
+
+        <button type="submit">Submit Feedback</button>
+
+    </form>
+
+</body>
+</html>

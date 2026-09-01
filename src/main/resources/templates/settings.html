@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>Settings</title>
+</head>
+
+<body>
+
+<div id="content">
+
+    <div class="max-w-3xl mx-auto mt-6">
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl">
+
+            <h1 class="text-2xl font-semibold text-heading mb-6">
+                Settings
+            </h1>
+
+            <a th:href="@{/settings/change-password}"
+               class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+
+                <h2 class="text-lg font-medium text-heading">
+                    Change Password
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Update your account password.
+                </p>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    console.log("Settings Page");
+</script>
+
+</body>
+</html>

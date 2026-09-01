@@ -20,11 +20,24 @@
             My Contacts
         </h1>
 
-        <a th:href="@{/contacts/add}"
-           class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
-            Add Contact
-        </a>
+        <div class="flex gap-2">
 
+    <a th:href="@{/contacts/export/excel}"
+       class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2">
+        Export Excel
+    </a>
+
+    <a th:href="@{/contacts/export/pdf}"
+       class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2">
+        Export PDF
+    </a>
+
+    <a th:href="@{/contacts/add}"
+       class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
+        Add Contact
+    </a>
+
+</div>
     </div>
 
     <!-- Search -->
@@ -76,6 +89,35 @@
                 </p>
 
             </div>
+
+        </div>
+
+         <!-- Pagination -->
+        <div th:if="${totalPages > 1}"
+             class="flex justify-center gap-2 mt-8">
+
+            <!-- Previous button -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/contacts(page=${currentPage - 1}, keyword=${keyord})}"
+               class="px-4 py-2 bg-blue-700 text-white rounded-lg">
+                Previous
+            </a>
+
+
+            <!-- Page numbers -->
+            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+               th:href="@{/contacts(page=${i}, keyword=${keyword})}"
+               th:text="${i + 1}"
+               class="px-4 py-2 rounded-lg bg-gray-700 text-white">
+            </a>
+
+
+            <!-- Next button -->
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/contacts(page=${currentPage + 1}, keyword=${keyword})}"
+               class="px-4 py-2 bg-blue-700 text-white rounded-lg">
+                Next
+            </a>
 
         </div>
 

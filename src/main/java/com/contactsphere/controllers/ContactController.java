@@ -3,6 +3,12 @@ package com.contactsphere.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +23,8 @@ import com.contactsphere.entities.SocialLink;
 import com.contactsphere.entities.User;
 import com.contactsphere.repositories.UserRepo;
 import com.contactsphere.services.ContactService;
+import com.contactsphere.services.ExcelService;
+import com.contactsphere.services.PdfService;
 import com.contactsphere.services.SocialLinkService;
 
 @Controller
@@ -31,22 +39,35 @@ public class ContactController {
     @Autowired
     private SocialLinkService socialLinkService;
 
+    @Autowired
+    private ExcelService excelService;
+
+    @Autowired
+    private PdfService pdfService;
+
     @GetMapping("/contacts")
     public String contacts(@RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
             Model model, Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<Contact> contacts;
+        int pageSize = 5;
+        
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Contact> contactPage;
 
         if(keyword != null && !keyword.trim().isEmpty()) {
-            contacts = contactService.searchContacts(user, keyword);
+            contactPage = contactService.searchContacts(user, keyword, pageable);
         } else {
-            contacts = contactService.getAllContacts(user);
+            contactPage = contactService.getContactsByUser(user, pageable);
         }
 
-        model.addAttribute("contacts", contacts);
+        model.addAttribute("contacts", contactPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", contactPage.getTotalPages());
         model.addAttribute("keyword", keyword);
 
         return "contacts";
@@ -173,5 +194,45 @@ public class ContactController {
         contactService.saveContact(contact);
 
         return "redirect:/contacts/" + contactId;
+    }
+
+    @GetMapping("/contacts/export/excel")
+    public ResponseEntity<byte[]> exportContactsToExcel(Authentication authentication) {
+
+        User user = userRepo.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Contact> contacts = contactService.getAllContacts(user);
+
+        byte[] excelData = excelService.exportContactsToExcel(contacts);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                     "attachment; filename=contacts.xlsx"
+                )
+                .contentType(
+                    MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+                )
+                .body(excelData);
+    }
+
+    @GetMapping("contacts/export/pdf")
+    public ResponseEntity<byte[]> exportContactsToPdf(Authentication authentication) {
+
+        User user = userRepo.findByEmail(authentication.getName())
+               .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Contact> contacts = contactService.getAllContacts(user);
+
+        byte[] pdfData = pdfService.exportContactsToPdf(contacts);
+
+        return ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=contacts.pdf"
+                )
+                .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
+                .body(pdfData);
     }
 }
