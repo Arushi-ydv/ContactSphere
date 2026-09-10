@@ -2,21 +2,24 @@ package com.contactsphere.services.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.contactsphere.entities.Contact;
 import com.contactsphere.entities.User;
+import com.contactsphere.exceptions.ResourceNotFoundException;
 import com.contactsphere.repositories.ContactRepo;
 import com.contactsphere.services.ContactService;
 
 @Service
 public class ContactServiceImpl implements ContactService {
 
-    @Autowired
-    private ContactRepo contactRepo;
+    private final ContactRepo contactRepo;
+
+    public ContactServiceImpl(ContactRepo contactRepo) {
+        this.contactRepo = contactRepo;
+    }
 
     @Override
     public Contact saveContact(Contact contact) {
@@ -46,7 +49,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact getContactById(Long id) {
-        return contactRepo.findById(id).orElse(null);
+        return contactRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
     @Override

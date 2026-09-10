@@ -23,5 +23,4 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    // add more methods here related user service[logic]
 }

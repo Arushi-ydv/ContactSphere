@@ -1,6 +1,5 @@
 package com.contactsphere.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,8 +11,11 @@ import com.contactsphere.repositories.UserRepo;
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+
+    public CustomUserDetailsService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

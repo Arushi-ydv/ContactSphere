@@ -1,59 +1,54 @@
 package com.contactsphere.controllers;
 
-import com.contactsphere.entities.Contact;
 import com.contactsphere.entities.User;
 import com.contactsphere.entities.VerificationToken;
 import com.contactsphere.forms.UserForm;
 import com.contactsphere.repositories.UserRepo;
 import com.contactsphere.repositories.VerificationTokenRepo;
-import com.contactsphere.services.CloudinaryService;
-import com.contactsphere.services.ContactService;
 import com.contactsphere.services.EmailService;
 import com.contactsphere.services.UserService;
 
+import jakarta.validation.Valid;
+
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
 public class PageController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserRepo userRepo;
+    private final VerificationTokenRepo verificationTokenRepo;
+    private final EmailService emailService;
 
-    @Autowired
-    private ContactService contactService;
+    public PageController(
+            UserService userService,
+            UserRepo userRepo,
+            VerificationTokenRepo verificationTokenRepo,
+            EmailService emailService) {
 
-    @Autowired
-    private UserRepo userRepo;
+        this.userService = userService;
+        this.userRepo = userRepo;
+        this.verificationTokenRepo = verificationTokenRepo;
+        this.emailService = emailService;
+    }
 
-    @Autowired
-    private CloudinaryService cloudinaryService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private VerificationTokenRepo verificationTokenRepo;
-
-    @Autowired
-    private EmailService emailService;
-
+    @Value("${app.base-url}")
+    private String appBaseUrl;
+ 
     @ModelAttribute
     public void addAuthentication(Model model, Authentication authentication) {
         if(authentication != null 
@@ -96,117 +91,6 @@ public class PageController {
     public String contact() {
         return new String("contact");
     }
-    
-    // Dashboard
-    @GetMapping("/dashboard")
-    public String dashboard(Model model, Authentication authentication) {
-        User user = userRepo.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        List<Contact> contacts = contactService.getAllContacts(user);
-        long totalContacts = contacts.size();
-
-        long favouriteContacts = contacts.stream()
-                .filter(Contact::isFavourite)
-                .count();
-
-        long socialLinks = contacts.stream()
-                .mapToLong(contact -> contact.getLinks().size())
-                .sum();
-
-        model.addAttribute("user", user);
-        model.addAttribute("contacts", contacts);
-        model.addAttribute("totalContacts", totalContacts);
-        model.addAttribute("favouriteContacts", favouriteContacts);
-        model.addAttribute("socialLinks", socialLinks);
-
-        return "dashboard";
-    }
-
-    //Profile
-
-    @GetMapping("/profile")
-    public String profile(Model model, Authentication authentication) {
-        User user = userRepo.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        model.addAttribute("user", user);
-
-        return "profile";
-    }
-
-    // Edit Profile
-
-    @GetMapping("/profile/edit")
-    public String editProfile(Model model, Authentication authentication) {
-
-        User user = userRepo.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        model.addAttribute("user", user);
-
-        return "edit-profile";
-    }
-
-    @PostMapping("/profile/update")
-    public String updateProfile(@RequestParam String name,
-                                @RequestParam String phoneNumber,
-                                @RequestParam String about,
-                                @RequestParam("profilePic") MultipartFile profilePic,
-                                Authentication authentication) {
-
-        User user = userRepo.findByEmail(authentication.getName())
-               .orElseThrow(() -> new RuntimeException("User not found"));
-
-        user.setName(name);
-        user.setPhoneNumber(phoneNumber);
-        user.setAbout(about);
-
-        if (!profilePic.isEmpty()) {
-            String imageUrl = cloudinaryService.uploadImage(profilePic);
-            user.setProfilePic(imageUrl);
-        }
-
-        userRepo.save(user);
-
-        return "redirect:/profile";
-    }
-
-    // Settings
-    @GetMapping("/settings")
-    public String settings() {
-        return "settings";
-    }
-
-    @GetMapping("/settings/change-password")
-    public String changePasswordPage() {
-        return "change-password";
-    }
-
-    @PostMapping("/settings/change-password")
-    public String changePassword(
-            @RequestParam String currentPassword,
-            @RequestParam String newPassword,
-            @RequestParam String confirmPassword,
-            Authentication authentication) {
-
-        User user = userRepo.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            return "redirect:/settings/change-password";
-        }
-
-        if(!newPassword.equals(confirmPassword)) {
-            return "redirect:/settings/change-password";
-        }
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-
-        userRepo.save(user);
-
-        return "redirect:/settings";
-    }
 
     // login
     @GetMapping("/login")
@@ -225,24 +109,39 @@ public class PageController {
     }
     
     //Processing register
-    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm) {
-        System.out.println("Processing registration");
-        // fetch form data
-        // UserForm
-        System.out.println(userForm);
-        // validate form data
-        // save to database
+    @PostMapping("/do-register")
+    public String processRegister(
+            @Valid @ModelAttribute("userForm") UserForm userForm,
+            BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "register";
+        }
+
+        if(userRepo.existsByEmail(userForm.getEmail())) {
+            
+            bindingResult.rejectValue(
+                "email",
+                "error.userForm",
+                "Email is already registered"
+            );
+
+            return "register";
+        }
+
+        // create user
         User user = new User();
+
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
 
+        // save user
         User savedUser = userService.saveUser(user);
-        System.out.println("User saved successfully");
 
+        // Generate verification token
         String token = UUID.randomUUID().toString();
 
         VerificationToken verificationToken = new VerificationToken();
@@ -253,12 +152,12 @@ public class PageController {
 
         verificationTokenRepo.save(verificationToken);
 
-        String verificationLink = "http://localhost:8081/verify-email?token=" + token;
+        String verificationLink = appBaseUrl + "/verify-email?token=" + token;
 
         emailService.sendSimpleEmail(savedUser.getEmail(), "Verify Your ContactSphere Account", "Click the link below to verify your email:\n\n" + verificationLink);
 
         // Redirect to login page
-        return "redirect:/register";
+        return "redirect:/login?registered=true";
     }
 
     @GetMapping("/verify-email")
@@ -276,8 +175,12 @@ public class PageController {
         }
 
         User user = verificationToken.getUser();
+
         user.setEmailVerified(true);
+        user.setEnabled(true);
         userRepo.save(user);
+
+        verificationTokenRepo.deleteByUser(user);
         
         return "redirect:/login?verified=true";
     }

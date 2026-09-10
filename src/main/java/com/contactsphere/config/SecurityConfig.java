@@ -1,6 +1,5 @@
 package com.contactsphere.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,11 +19,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
-    @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
+    public SecurityConfig(
+            CustomUserDetailsService customUserDetailsService,
+            CustomOAuth2UserService customOAuth2UserService) {
+
+        this.customUserDetailsService = customUserDetailsService;
+        this.customOAuth2UserService = customOAuth2UserService;
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -37,6 +41,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authenticationProvider(authenticationProvider());
+
         http
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(
@@ -57,7 +63,7 @@ public class SecurityConfig {
         )
         .formLogin(form -> form
             .loginPage("/login")
-            .defaultSuccessUrl("/home", true)
+            .defaultSuccessUrl("/dashboard", true)
             .permitAll()
         )
         .oauth2Login(oauth2 -> oauth2
@@ -65,7 +71,7 @@ public class SecurityConfig {
             .userInfoEndpoint(userInfo -> userInfo
                 .userService(customOAuth2UserService)
             )
-            .defaultSuccessUrl("/home", true)
+            .defaultSuccessUrl("/dashboard", true)
         )
         .logout(logout -> logout
             .logoutUrl("/logout")

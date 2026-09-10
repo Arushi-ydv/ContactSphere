@@ -3,7 +3,6 @@ package com.contactsphere.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +14,25 @@ import com.contactsphere.services.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(
+            UserRepo userRepo,
+            PasswordEncoder passwordEncoder) {
+
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;        
+    }
 
     @Override
     public User saveUser(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        if(user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(
+                passwordEncoder.encode(user.getPassword())
+            );
+        }
         return userRepo.save(user);
     }
 

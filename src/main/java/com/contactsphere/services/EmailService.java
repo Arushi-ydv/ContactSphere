@@ -8,7 +8,7 @@ public interface EmailService {
         String to,
         String subject,
         String message,
-        MultipartFile atttachment
+        MultipartFile attachment
     );
 
     void sendSimpleEmail(

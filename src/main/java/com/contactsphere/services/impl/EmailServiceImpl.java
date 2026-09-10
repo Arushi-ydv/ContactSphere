@@ -1,6 +1,5 @@
 package com.contactsphere.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,11 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
+
+    public EmailServiceImpl(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Override
     public void sendEmail(
@@ -34,11 +36,36 @@ public class EmailServiceImpl implements EmailService {
             helper.setText(message);
 
             if(attachment != null && !attachment.isEmpty()) {
-                helper.addAttachment(attachment.getOriginalFilename(), attachment);
+
+                String fileName = attachment.getOriginalFilename();
+
+                if(fileName == null || fileName.contains("..")) {
+                    throw new IllegalArgumentException("Invalid file name");
+                }
+
+                if(attachment.getSize() > 5 * 1024 * 1024) {
+                    throw new IllegalArgumentException("Attachment size must be less than 5 MB");
+                }
+
+                String contentType = attachment.getContentType();
+
+                if (contentType == null ||
+                        !(contentType.equals("application/pdf")
+                        || contentType.equals("image/jpeg")
+                        || contentType.equals("image/png")
+                        || contentType.equals("text/plain")
+                        || contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        || contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))) {
+
+                    throw new IllegalArgumentException("Unsupported attachment type");
+                }
+
+                helper.addAttachment(fileName, attachment);
             }
             mailSender.send(mimeMessage);
+            
         } catch(MessagingException e) {
-            throw new RuntimeException("Failed to send email", e);
+            throw new IllegalStateException("Failed to send email", e);
         }       
     }
 
@@ -59,7 +86,7 @@ public class EmailServiceImpl implements EmailService {
 
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send email", e);
+            throw new IllegalStateException("Failed to send email", e);
         }       
     }
 }

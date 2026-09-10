@@ -1,13 +1,11 @@
 package com.contactsphere.services.impl;
 
-import com.cloudinary.Cloudinary;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.openpdf.text.Document;
 import org.openpdf.text.Paragraph;
 import org.openpdf.text.pdf.PdfPTable;
-import org.openpdf.text.pdf.PdfTable;
 import org.openpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +14,6 @@ import com.contactsphere.services.PdfService;
 
 @Service
 public class PdfServiceImpl implements PdfService{
-
-    private final Cloudinary cloudinary;
-
-    PdfServiceImpl(Cloudinary cloudinary) {
-        this.cloudinary = cloudinary;
-    }
 
     @Override
     public byte[] exportContactsToPdf(List<Contact> contacts){
@@ -60,7 +52,7 @@ public class PdfServiceImpl implements PdfService{
             return outputStream.toByteArray();
 
         } catch(Exception e) {
-            throw new RuntimeException("Failed to export contacts to PDF", e);
+            throw new IllegalStateException("Failed to export contacts to PDF", e);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.contactsphere.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.contactsphere.entities.Feedback;
@@ -10,8 +9,11 @@ import com.contactsphere.services.FeedbackService;
 @Service
 public class FeedbackServiceImpl implements FeedbackService{
 
-    @Autowired
-    private FeedbackRepo feedbackRepo;
+    private final FeedbackRepo feedbackRepo;
+
+    public FeedbackServiceImpl(FeedbackRepo feedbackRepo) {
+        this.feedbackRepo = feedbackRepo;
+    }
 
     @Override
     public Feedback saveFeedback(Feedback feedback) {

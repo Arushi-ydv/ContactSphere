@@ -23,6 +23,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         this.userRepo = userRepo;
     }
 
+    @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
 
@@ -38,24 +39,34 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Providers provider;
 
         // GOOGLE
-        if(registrationId.equals("google")) {
+        if("google".equals(registrationId)) {
             email = (String) attributes.get("email");
             name = (String) attributes.get("name");
+
             providerUserId = (String) attributes.get("sub");
 
             provider = Providers.GOOGLE;
-        } else if (registrationId.equals("github"))  {
+
+        } else if ("github".equals(registrationId))  {
             email = (String) attributes.get("email");
             name = (String) attributes.get("name");
 
-            if(name == null) {
+            if(name == null || name.isBlank()) {
                 name = (String) attributes.get("login");
             }
             providerUserId = String.valueOf(attributes.get("id"));
+
             provider = Providers.GITHUB;
+
         } else {
             throw new IllegalArgumentException(
                 "Unsupported OAuth2 provider: " + registrationId);
+        }
+
+        if(email == null || email.isBlank()) {
+            throw new IllegalArgumentException(
+                "Email not provided by OAuth2 provider"
+            );
         }
 
        // Find existing user
@@ -63,17 +74,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // If user does not exist, create one
         if(user == null){
-            User newUser = new User();
+            user = new User();
 
-            newUser.setEmail(email);
-            newUser.setName(name);
-            newUser.setProvider(provider);
-            newUser.setProviderUserId(providerUserId);
-            newUser.setEnabled(true);
-            newUser.setEmailVerified(true);
+            user.setEmail(email);
+            user.setName(name);
         }
                     
-        // Update provider information
+        // Update OAuth information
         user.setProvider(provider);
         user.setProviderUserId(providerUserId);
         user.setEnabled(true);

@@ -47,7 +47,7 @@ public class ExcelServiceImpl implements ExcelService {
                 return outputStream.toByteArray();
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to export contacts to Excel");
+            throw new IllegalStateException("Failed to export contacts to Excel", e);
         }
     }
 }

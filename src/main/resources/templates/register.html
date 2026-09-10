@@ -28,6 +28,10 @@
                         method="post"
                         data-th-object="${userForm}"
                     >
+
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}" />
+
+                    
                         <!-- Name -->
 
                         <div class="mt-3 mb-2">
