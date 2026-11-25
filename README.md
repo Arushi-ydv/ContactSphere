@@ -1,47 +1,30 @@
-# ContactSphere
+# ContactSphere – Contact Management System
 
-A secure contact management application built with Java and Spring Boot, providing authenticated users with features to manage contacts, user profiles, email communication, profile images, and contact data exports.
+ContactSphere is a Java-based Contact Management Application developed using Spring Boot. It provides secure user authentication and allows users to manage their personal and professional contacts efficiently.
 
 ## Features
 
-- User Registration and Login
-- Authentication and Authorization using Spring Security
-- OAuth 2.0 Authentication with Google and GitHub
-- Email Verification
-- Password Management
-- Add, Update, Delete, and View Contacts
-- Contact Search
-- Favorite Contacts
-- Pagination
-- User Profile Management
-- Contact Profile Image Upload using Cloudinary
-- Email Sending with File Attachments
-- Contact Data Export to Excel and PDF
-- Feedback System
+- **User Authentication:** User registration, login, and secure authentication.
+- **Email Verification:** Email verification during user registration.
+- **Contact Management:** Add, view, update, and delete contacts.
+- **Email Integration:** Send emails with file attachments.
+- **Pagination:** Display contacts in manageable pages.
+- **Profile Management:** View and update user profile information.
+- **Feedback System:** Submit feedback through the application.
+- **Social Login:** Authentication using Google and GitHub.
 
-## Technologies Used
+## Technology Stack
 
-### Backend
-
-- Java
-- Spring Boot
-- Spring Security
-- OAuth 2.0
-- Spring Data JPA
-- Hibernate
-
-### Database
-
-- MySQL
-
-### Integrations & Tools
-
-- Cloudinary
-- JavaMail
-- Apache POI
-- Maven
-- Git
-- GitHub
+| Category | Technologies |
+|---|---|
+| Programming Language | Java 21 |
+| Backend Framework | Spring Boot |
+| Security | Spring Security |
+| ORM | Hibernate |
+| Data Access | Spring Data JPA |
+| Database | MySQL |
+| Build Tool | Maven |
+| Version Control | Git, GitHub |
 
 ## Architecture
 
@@ -101,41 +84,60 @@ src/main/java/com/contactsphere
 └── ContactsphereApplication.java
 ```
 
-## Getting Started
+## Application Setup
 
 ### Prerequisites
 
-- Java
-- Maven
+- Java JDK 21
 - MySQL
-- Git
 
-### Setup
+### Steps to Run
 
-1. Clone the repository.
-2. Create a MySQL database for the application.
-3. Configure the required application properties in:
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Arushi-ydv/ContactSphere
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd ContactSphere
+   ```
+
+3. Create a MySQL database named `contactsphere`.
+
+4. Configure the required database, email, and OAuth credentials using environment variables or your local `application.properties` file.
+
+5. Run the application:
+
+   **On Windows PowerShell:**
+
+   ```powershell
+   .\mvnw spring-boot:run
+   ```
+
+   **On Linux/macOS:**
+
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+6. Open the application in your browser:
+
+   ```text
+   http://localhost:8081
+   ```
 
 ```text
 application.properties
 ```
 
-4. Configure the required values for:
+- Spring Security for application authentication and authorization.
+- Sensitive credentials are managed through environment variables.
+- OAuth2-based login integration with Google and GitHub.
 
-   - MySQL
-   - Google OAuth 2.0
-   - GitHub OAuth 2.0
-   - Email service
-   - Cloudinary
-
-5. Build and run the Spring Boot application.
-6. Open the application in your browser.
-
-## Configuration
-
-Use the provided configuration example as a reference for setting up the application locally.
-
-Do not commit passwords, API keys, OAuth credentials, or other sensitive information to the repository.
+**Note:** Do not commit passwords, API credentials, or other sensitive configuration values to the repository.
 
 ## Author
 

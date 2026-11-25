@@ -52,6 +52,7 @@ public class DashboardController {
                 .sum();
 
         model.addAttribute("user", user);
+        model.addAttribute("loggedInUser", user.getName());
         model.addAttribute("contacts", contacts);
         model.addAttribute("totalContacts", totalContacts);
         model.addAttribute("favouriteContacts", favouriteContacts);

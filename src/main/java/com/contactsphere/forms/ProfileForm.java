@@ -1,19 +1,19 @@
-package com.contactsphere.forms;
 
-import org.springframework.web.multipart.MultipartFile;
+package com.contactsphere.forms;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter 
-@Setter 
-@NoArgsConstructor 
-@AllArgsConstructor 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProfileForm {
 
     @NotBlank(message = "Name is required")
@@ -28,6 +28,4 @@ public class ProfileForm {
 
     @Size(max = 1000, message = "About cannot exceed 1000 characters")
     private String about;
-
-    private MultipartFile profilePic;
 }

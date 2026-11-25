@@ -1,13 +1,9 @@
-package com.contactsphere.controllers;
 
-import java.util.List;
+package com.contactsphere.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +23,6 @@ import com.contactsphere.forms.ContactForm;
 import com.contactsphere.forms.SocialLinkForm;
 import com.contactsphere.repositories.UserRepo;
 import com.contactsphere.services.ContactService;
-import com.contactsphere.services.ExcelService;
-import com.contactsphere.services.PdfService;
 import com.contactsphere.services.SocialLinkService;
 
 import jakarta.validation.Valid;
@@ -39,38 +33,34 @@ public class ContactController {
     private final ContactService contactService;
     private final UserRepo userRepo;
     private final SocialLinkService socialLinkService;
-    private final ExcelService excelService;
-    private final PdfService pdfService;
 
     public ContactController(
             ContactService contactService,
             UserRepo userRepo,
-            SocialLinkService socialLinkService,
-            ExcelService excelService,
-            PdfService pdfService) {
+            SocialLinkService socialLinkService) {
 
         this.contactService = contactService;
         this.userRepo = userRepo;
         this.socialLinkService = socialLinkService;
-        this.excelService = excelService;
-        this.pdfService = pdfService;
     }
 
     @GetMapping("/contacts")
-    public String contacts(@RequestParam(required = false) String keyword,
+    public String contacts(
+            @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,
-            Model model, Authentication authentication) {
+            Model model,
+            Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         int pageSize = 5;
-        
+
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Page<Contact> contactPage;
 
-        if(keyword != null && !keyword.trim().isEmpty()) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
             contactPage = contactService.searchContacts(user, keyword, pageable);
         } else {
             contactPage = contactService.getContactsByUser(user, pageable);
@@ -93,31 +83,37 @@ public class ContactController {
     }
 
     @GetMapping("/contacts/{id}")
-    public String contactDetail(@PathVariable Long id, Model model, Authentication authentication) {
+    public String contactDetail(
+            @PathVariable Long id,
+            Model model,
+            Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Contact contact = contactService.getContactById(id);
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
+
         model.addAttribute("contact", contact);
         model.addAttribute("socialLinkForm", new SocialLinkForm());
         return "contact-detail";
     }
 
     @GetMapping("/contacts/{id}/edit")
-    public String editContactForm(@PathVariable Long id,
-                                    Model model,
-                                    Authentication authentication) {
+    public String editContactForm(
+            @PathVariable Long id,
+            Model model,
+            Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Contact contact = contactService.getContactById(id);
 
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
 
@@ -142,7 +138,7 @@ public class ContactController {
             BindingResult bindingResult,
             Authentication authentication) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "add-contact";
         }
 
@@ -161,6 +157,7 @@ public class ContactController {
 
         contact.setUser(user);
         contactService.saveContact(contact);
+
         return "redirect:/contacts";
     }
 
@@ -177,11 +174,11 @@ public class ContactController {
 
         Contact existingContact = contactService.getContactById(id);
 
-        if(!existingContact.getUser().getUserId().equals(user.getUserId())) {
+        if (!existingContact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("contact", existingContact);
             return "edit-contact";
         }
@@ -200,31 +197,37 @@ public class ContactController {
     }
 
     @PostMapping("/contacts/{id}/delete")
-    public String deleteContact(@PathVariable Long id, Authentication authentication) {
+    public String deleteContact(
+            @PathVariable Long id,
+            Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Contact contact = contactService.getContactById(id);
 
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
+
         contactService.deleteContact(id);
         return "redirect:/contacts";
     }
 
     @PostMapping("/contacts/{id}/favourite")
-    public String togglefavourite(@PathVariable Long id, Authentication authentication) {
+    public String togglefavourite(
+            @PathVariable Long id,
+            Authentication authentication) {
 
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Contact contact = contactService.getContactById(id);
 
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
+
         contact.setFavourite(!contact.isFavourite());
         contactService.saveContact(contact);
 
@@ -232,7 +235,7 @@ public class ContactController {
     }
 
     @PostMapping("/contacts/{contactId}/social-links")
-    public String addSocialLink (
+    public String addSocialLink(
             @PathVariable Long contactId,
             @Valid @ModelAttribute("socialLinkForm") SocialLinkForm socialLinkForm,
             BindingResult bindingResult,
@@ -244,11 +247,11 @@ public class ContactController {
 
         Contact contact = contactService.getContactById(contactId);
 
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("contact", contact);
             return "contact-detail";
         }
@@ -264,59 +267,23 @@ public class ContactController {
     }
 
     @PostMapping("/contacts/{contactId}/social-links/{socialLinkId}/delete")
-    public String deleteSocialLink(@PathVariable Long contactId, @PathVariable Long socialLinkId, Authentication authentication) {
-        
+    public String deleteSocialLink(
+            @PathVariable Long contactId,
+            @PathVariable Long socialLinkId,
+            Authentication authentication) {
+
         User user = userRepo.findByEmail(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-                
+
         Contact contact = contactService.getContactById(contactId);
 
-        if(!contact.getUser().getUserId().equals(user.getUserId())) {
+        if (!contact.getUser().getUserId().equals(user.getUserId())) {
             throw new UnauthorizedException("Unauthorized");
         }
+
         contact.getLinks().removeIf(link -> link.getId().equals(socialLinkId));
         contactService.saveContact(contact);
 
         return "redirect:/contacts/" + contactId;
-    }
-
-    @GetMapping("/contacts/export/excel")
-    public ResponseEntity<byte[]> exportContactsToExcel(Authentication authentication) {
-
-        User user = userRepo.findByEmail(authentication.getName())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        List<Contact> contacts = contactService.getAllContacts(user);
-
-        byte[] excelData = excelService.exportContactsToExcel(contacts);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                     "attachment; filename=contacts.xlsx"
-                )
-                .contentType(
-                    MediaType.parseMediaType(
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    )
-                )
-                .body(excelData);
-    }
-
-    @GetMapping("contacts/export/pdf")
-    public ResponseEntity<byte[]> exportContactsToPdf(Authentication authentication) {
-
-        User user = userRepo.findByEmail(authentication.getName())
-               .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        List<Contact> contacts = contactService.getAllContacts(user);
-
-        byte[] pdfData = pdfService.exportContactsToPdf(contacts);
-
-        return ResponseEntity.ok()
-                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=contacts.pdf"
-                )
-                .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
-                .body(pdfData);
     }
 }

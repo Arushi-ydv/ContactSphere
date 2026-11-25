@@ -1,3 +1,4 @@
+
 package com.contactsphere.controllers;
 
 import org.springframework.stereotype.Controller;
@@ -24,14 +25,23 @@ public class EmailController {
     }
 
     @GetMapping("/send-email")
-    public String sendEmailPage(Model model) {
-        model.addAttribute("emailForm", new EmailForm());
+    public String sendEmailPage(
+            @RequestParam(required = false) String to,
+            Model model) {
+
+        EmailForm emailForm = new EmailForm();
+
+        if (to != null && !to.isBlank()) {
+            emailForm.setTo(to);
+        }
+
+        model.addAttribute("emailForm", emailForm);
         return "send-email";
     }
 
     @PostMapping("/email/send")
     public String sendEmail(
-            @Valid @ModelAttribute ("emailForm") EmailForm emailForm,
+            @Valid @ModelAttribute("emailForm") EmailForm emailForm,
             BindingResult bindingResult,
             @RequestParam(required = false) MultipartFile attachment,
             Model model) {
@@ -40,10 +50,12 @@ public class EmailController {
             return "send-email";
         }
 
-        emailService.sendEmail(emailForm.getTo(),
-                                emailForm.getSubject(),
-                                emailForm.getMessage(),
-                                attachment);
+        emailService.sendEmail(
+                emailForm.getTo(),
+                emailForm.getSubject(),
+                emailForm.getMessage(),
+                attachment
+        );
 
         return "redirect:/send-email";
     }

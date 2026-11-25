@@ -57,7 +57,10 @@ public class SecurityConfig {
                 "/css/**",
                 "/js/**",
                 "/images/**",
-                "/verify-email"
+                "/verify-email",
+                "/resend-verification",
+                "/forgot-password",
+                "/reset-password"
                 ).permitAll()
                 .anyRequest().authenticated()
         )

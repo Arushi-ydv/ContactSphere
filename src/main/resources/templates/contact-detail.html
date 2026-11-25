@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
@@ -10,193 +11,329 @@
 
 <div id="content">
 
-    <div class="max-w-screen-md mx-auto px-4 py-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
 
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <a th:href="@{/contacts}"
+               class="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-5">
+                <span>←</span> Back to Contacts
+            </a>
 
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6"
-                th:text="${contact.name}">
-                Contact Name
-            </h1>
-
-            <div class="space-y-4">
-
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <p class="text-sm text-gray-500">Email</p>
-                    <p class="text-lg text-gray-900 dark:text-white"
-                       th:text="${contact.email}">
-                        Email
+                    <p class="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+                        Contact Profile
+                    </p>
+
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white"
+                        th:text="${contact.name}">
+                        Contact Name
+                    </h1>
+
+                    <p class="mt-2 text-gray-500 dark:text-gray-400">
+                        View and manage your contact information
                     </p>
                 </div>
 
-                <div>
-                    <p class="text-sm text-gray-500">Phone</p>
-                    <p class="text-lg text-gray-900 dark:text-white"
-                       th:text="${contact.phoneNumber}">
-                        Phone
-                    </p>
+                <span th:if="${contact.favourite}"
+                      class="inline-flex items-center gap-2 self-start rounded-full bg-yellow-100 dark:bg-yellow-900/40 px-4 py-2 text-sm font-semibold text-yellow-700 dark:text-yellow-300">
+                    ★ Favourite Contact
+                </span>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
+
+            <!-- Contact Information -->
+            <div class="p-6 sm:p-8">
+
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 text-xl">
+                        👤
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                            Personal Information
+                        </h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Your contact's basic details
+                        </p>
+                    </div>
                 </div>
 
-                <div>
-                    <p class="text-sm text-gray-500">Address</p>
-                    <p class="text-lg text-gray-900 dark:text-white"
-                       th:text="${contact.address}">
-                        Address
-                    </p>
-                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-                <div>
-                    <p class="text-sm text-gray-500">Description</p>
-                    <p class="text-lg text-gray-900 dark:text-white"
-                       th:text="${contact.description}">
-                        Description
-                    </p>
-                </div>
+                    <!-- Email -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 p-4">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Email Address
+                        </p>
+                        <p class="text-base font-semibold text-gray-900 dark:text-white break-all"
+                           th:text="${contact.email}">
+                            Email
+                        </p>
+                    </div>
 
-                <div>
-                    <p class="text-sm text-gray-500">Favourite</p>
-                    <p class="text-lg text-gray-900 dark:text-white"
-                       th:text="${contact.favourite ? 'Yes' : 'No'}">
-                        No
-                    </p>
-                </div>
+                    <!-- Phone -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 p-4">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Phone Number
+                        </p>
+                        <p class="text-base font-semibold text-gray-900 dark:text-white"
+                           th:text="${contact.phoneNumber}">
+                            Phone
+                        </p>
+                    </div>
 
+                    <!-- Address -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 p-4">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Address
+                        </p>
+                        <p class="text-base font-semibold text-gray-900 dark:text-white break-words"
+                           th:text="${contact.address != null and !#strings.isEmpty(contact.address) ? contact.address : 'Not provided'}">
+                            Address
+                        </p>
+                    </div>
+
+                    <!-- Favourite -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 p-4">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Favourite Status
+                        </p>
+                        <p class="text-base font-semibold text-gray-900 dark:text-white"
+                           th:text="${contact.favourite ? '★ Favourite' : '☆ Not Favourite'}">
+                            Not Favourite
+                        </p>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="sm:col-span-2 rounded-xl bg-gray-50 dark:bg-gray-700/50 p-4">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Description
+                        </p>
+                        <p class="text-base text-gray-900 dark:text-white whitespace-pre-line break-words"
+                           th:text="${contact.description != null and !#strings.isEmpty(contact.description) ? contact.description : 'No description available'}">
+                            Description
+                        </p>
+                    </div>
+
+                </div>
             </div>
 
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
             <!-- Social Links -->
-<div class="mt-8">
+            <div class="p-6 sm:p-8">
 
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Social Links
-    </h2>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 text-xl">
+                        🔗
+                    </div>
 
-    <!-- Existing Social Links -->
-    <div th:if="${!#lists.isEmpty(contact.links)}"
-         class="space-y-2 mb-5">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                            Social Links
+                        </h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Manage this contact's social profiles
+                        </p>
+                    </div>
+                </div>
 
-        <div th:each="socialLink : ${contact.links}"
-     class="flex items-center justify-between bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                <!-- Existing Social Links -->
+                <div th:if="${!#lists.isEmpty(contact.links)}"
+                     class="space-y-3 mb-7">
 
-    <span class="font-medium text-gray-900 dark:text-white"
-          th:text="${socialLink.title}">
-        LinkedIn
-    </span>
+                    <div th:each="socialLink : ${contact.links}"
+                         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/40 p-4">
 
-    <div class="flex items-center gap-3">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-gray-900 dark:text-white"
+                               th:text="${socialLink.title}">
+                                LinkedIn
+                            </p>
 
-        <a th:href="${socialLink.link}"
-           target="_blank"
-           class="text-blue-600 hover:underline">
-            Open
-        </a>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 truncate"
+                               th:text="${socialLink.link}">
+                                https://example.com
+                            </p>
+                        </div>
 
-        <form th:action="@{'/contacts/' + ${contact.id} +
-                           '/social-links/' + ${socialLink.id} + '/delete'}"
-              method="post">
+                        <div class="flex items-center gap-4 shrink-0">
 
-            <input type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}">
+                            <a th:href="${socialLink.link}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+                                Open ↗
+                            </a>
 
-            <button type="submit"
-                    class="text-red-600 hover:text-red-800 font-medium">
-                Delete
-            </button>
+                            <form th:action="@{'/contacts/' + ${contact.id} + '/social-links/' + ${socialLink.id} + '/delete'}"
+                                  method="post">
 
-        </form>
+                                <input type="hidden"
+                                       th:name="${_csrf.parameterName}"
+                                       th:value="${_csrf.token}">
 
-    </div>
+                                <button type="submit"
+                                        class="text-sm font-semibold text-red-600 dark:text-red-400 hover:underline">
+                                    Delete
+                                </button>
 
-</div>
+                            </form>
 
-    </div>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Add Social Link Form -->
-    <form th:action="@{'/contacts/' + ${contact.id} + '/social-links'}"
-          method="post"
-          th:object="${socialLinkForm}"
-          class="space-y-3">
+                <!-- Empty Social Links -->
+                <div th:if="${#lists.isEmpty(contact.links)}"
+                     class="rounded-xl border border-dashed border-gray-300 dark:border-gray-600 p-6 text-center mb-7">
 
-        <input type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}">
+                    <p class="text-gray-500 dark:text-gray-400">
+                        No social links added yet.
+                    </p>
+                    <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">
+                        Add a social profile using the form below.
+                    </p>
+                </div>
 
-        <input type="text"
-               th:field="*{title}"
-               placeholder="Platform name (LinkedIn, GitHub...)"
-               required
-               class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white">
+                <!-- Add Social Link Form -->
+                <div class="rounded-xl bg-gray-50 dark:bg-gray-700/40 border border-gray-200 dark:border-gray-700 p-5">
 
-        <p th:if="${#fields.hasErrors('title')}"
-            th:errors="*{title}"
-            class="text-red-500 text-sm">
-        </p>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                        Add New Social Link
+                    </h3>
 
-        <input type="url"
-               th:field="*{link}"
-               placeholder="https://..."
-               required
-               class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">
+                        Enter the platform name and its profile URL.
+                    </p>
 
-        <p th:if="${#fields.hasErrors('link')}"
-            th:errors="*{link}"
-            class="text-red-500 text-sm">
-        </p>
+                    <form th:action="@{'/contacts/' + ${contact.id} + '/social-links'}"
+                          method="post"
+                          th:object="${socialLinkForm}"
+                          class="space-y-4">
 
-        <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
-            Add Social Link
-        </button>
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}">
 
-    </form>
+                        <div>
+                            <label for="title"
+                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Platform Name
+                            </label>
 
-</div>
+                            <input type="text"
+                                   id="title"
+                                   th:field="*{title}"
+                                   placeholder="e.g. LinkedIn, GitHub, Instagram"
+                                   required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
 
-            <div class="mt-6 flex gap-3">
+                            <p th:if="${#fields.hasErrors('title')}"
+                               th:errors="*{title}"
+                               class="text-red-500 text-sm mt-1">
+                            </p>
+                        </div>
 
-                <a th:href="@{'/contacts/' + ${contact.id} + '/edit'}"
-                    class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
-                    Edit Contact
-                </a>
+                        <div>
+                            <label for="link"
+                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Profile URL
+                            </label>
 
-                <!-- Favourite -->
-                <form th:action="@{'/contacts/' + ${contact.id} + '/favourite'}"
-                    method="post">
+                            <input type="url"
+                                   id="link"
+                                   th:field="*{link}"
+                                   placeholder="https://..."
+                                   required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
 
-                    <input type="hidden"
-                    th:name="${_csrf.parameterName}"
-                    th:value="${_csrf.token}">
+                            <p th:if="${#fields.hasErrors('link')}"
+                               th:errors="*{link}"
+                               class="text-red-500 text-sm mt-1">
+                            </p>
+                        </div>
 
-                    <button type="submit"
-                        class="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-lg text-sm px-4 py-2">
-
-                        <span th:text="${contact.favourite ? '★ Unfavourite' : '☆ Favourite'}">
-                            ☆ Favourite
-                        </span>
-
-                    </button>
-
-                </form>
-
-                <form th:action="@{'/contacts/' + ${contact.id} + '/delete'}" method="post">
-                    <input type="hidden"
-                            th:name="${_csrf.parameterName}"
-                            th:value="${_csrf.token}">
-
-                    <button type="submit"
-                            class="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-4 py-2">
-                        Delete Contact
+                        <button type="submit"
+                                class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors">
+                            + Add Social Link
                         </button>
-                </form>
 
-                <a th:href="@{/contacts}"
-                    class="text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-4 py-2">
-                    Back to Contacts
-                </a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
+            <!-- Action Buttons -->
+            <div class="p-6 sm:p-8 bg-gray-50 dark:bg-gray-800/60">
+
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                    Manage Contact
+                </h2>
+
+                <div class="flex flex-wrap gap-3">
+
+                    <!-- Edit -->
+                    <a th:href="@{'/contacts/' + ${contact.id} + '/edit'}"
+                       class="inline-flex items-center justify-center px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors">
+                        Edit Contact
+                    </a>
+
+                    <!-- Send Email -->
+                    <a th:href="@{/send-email(to=${contact.email})}"
+                        class="inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold text-sm transition-colors">
+                            ✉ Send Email
+                    </a>
+
+                    <!-- Favourite -->
+                    <form th:action="@{'/contacts/' + ${contact.id} + '/favourite'}"
+                          method="post">
+
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}">
+
+                        <button type="submit"
+                                class="inline-flex items-center justify-center px-5 py-3 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-sm transition-colors">
+
+                            <span th:text="${contact.favourite ? '★ Unfavourite' : '☆ Favourite'}">
+                                ☆ Favourite
+                            </span>
+
+                        </button>
+                    </form>
+
+                    <!-- Delete -->
+                    <form th:action="@{'/contacts/' + ${contact.id} + '/delete'}"
+                          method="post">
+
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}">
+
+                        <button type="submit"
+                                class="inline-flex items-center justify-center px-5 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-colors">
+                            Delete Contact
+                        </button>
+                    </form>
+
+                    <!-- Back -->
+                    <a th:href="@{/contacts}"
+                       class="inline-flex items-center justify-center px-5 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold text-sm transition-colors">
+                        Back to Contacts
+                    </a>
+
+                </div>
             </div>
 
         </div>
-
     </div>
 
 </div>

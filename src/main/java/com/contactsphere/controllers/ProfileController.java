@@ -1,10 +1,10 @@
+
 package com.contactsphere.controllers;
 
 import com.contactsphere.entities.User;
 import com.contactsphere.exceptions.ResourceNotFoundException;
 import com.contactsphere.forms.ProfileForm;
 import com.contactsphere.repositories.UserRepo;
-import com.contactsphere.services.CloudinaryService;
 
 import jakarta.validation.Valid;
 
@@ -20,12 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProfileController {
 
     private final UserRepo userRepo;
-    private final CloudinaryService cloudinaryService;
 
-    public ProfileController(UserRepo userRepo,
-                             CloudinaryService cloudinaryService) {
+    public ProfileController(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/profile")
@@ -73,15 +70,6 @@ public class ProfileController {
         user.setName(profileForm.getName());
         user.setPhoneNumber(profileForm.getPhoneNumber());
         user.setAbout(profileForm.getAbout());
-
-        if (profileForm.getProfilePic() != null
-                && !profileForm.getProfilePic().isEmpty()) {
-
-            String imageUrl =
-                    cloudinaryService.uploadImage(profileForm.getProfilePic());
-
-            user.setProfilePic(imageUrl);
-        }
 
         userRepo.save(user);
 

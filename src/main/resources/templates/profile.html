@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
@@ -10,70 +11,142 @@
 
 <div id="content">
 
-    <div class="max-w-3xl mx-auto mt-6">
+    <div class="max-w-4xl mx-auto px-4 py-10 sm:py-12">
 
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl">
+        <!-- Page Heading -->
+        <div class="mb-8">
+            <p class="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+                Account Settings
+            </p>
 
-            <!-- Profile Picture -->
-            <div class="mb-6">
-                <img th:src="${user.profilePic}"
-                    alt="Profile Picture"
-                    class="w-32 h-32 rounded-full object-cover border-2 border-gray-400">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+                My Profile
+            </h1>
+
+            <p class="mt-2 text-gray-500 dark:text-gray-400">
+                View and manage your personal account information.
+            </p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
+
+            <!-- Profile Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 sm:px-8 py-8">
+
+                <div class="text-center sm:text-left">
+
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white break-words"
+                        th:text="${user.name}">
+                        User Name
+                    </h2>
+
+                    <p class="text-blue-100 mt-2 break-all"
+                       th:text="${user.email}">
+                        user@example.com
+                    </p>
+
+                    <span class="inline-flex items-center mt-3 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold">
+                        ContactSphere Member
+                    </span>
+
+                </div>
             </div>
 
-            <div class="flex items-center justify-between mb-6">
+            <!-- Profile Information -->
+            <div class="p-6 sm:p-8">
 
-                <h1 class="text-2xl font-semibold text-heading">
-                    My Profile
-                </h1>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-7">
 
-                <a th:href="@{/profile/edit}"
-                    class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2">
-                        Edit Profile
-                </a>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                            Personal Information
+                        </h3>
+
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            Your registered account details
+                        </p>
+                    </div>
+
+                    <a th:href="@{/profile/edit}"
+                       class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors">
+                        ✏️ Edit Profile
+                    </a>
+
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                    <!-- Name -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 p-5">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Full Name
+                        </p>
+
+                        <p class="text-base font-semibold text-gray-900 dark:text-white break-words"
+                           th:text="${user.name}">
+                            Name
+                        </p>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 p-5">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Email Address
+                        </p>
+
+                        <p class="text-base font-semibold text-gray-900 dark:text-white break-all"
+                           th:text="${user.email}">
+                            Email
+                        </p>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 p-5">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Phone Number
+                        </p>
+
+                        <p class="text-base font-semibold text-gray-900 dark:text-white"
+                           th:text="${user.phoneNumber != null and !#strings.isEmpty(user.phoneNumber) ? user.phoneNumber : 'Not provided'}">
+                            Phone Number
+                        </p>
+                    </div>
+
+                    <!-- Provider -->
+                    <div class="rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 p-5">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            Login Provider
+                        </p>
+
+                        <p class="text-base font-semibold text-gray-900 dark:text-white"
+                           th:text="${user.provider}">
+                            Provider
+                        </p>
+                    </div>
+
+                    <!-- About -->
+                    <div class="sm:col-span-2 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 p-5">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                            About Me
+                        </p>
+
+                        <p class="text-base text-gray-900 dark:text-white whitespace-pre-line break-words"
+                           th:text="${user.about != null and !#strings.isEmpty(user.about) ? user.about : 'No information added yet.'}">
+                            About
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Note -->
+                <div class="mt-7 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/40">
+                    <p class="text-sm text-blue-800 dark:text-blue-300">
+                        Keep your profile information updated so your account details stay accurate.
+                    </p>
+                </div>
 
             </div>
-
-            <!-- Name -->
-            <div class="mb-4">
-                <p class="text-gray-400 text-sm">Name</p>
-                <p class="text-heading font-medium"
-                   th:text="${user.name}">
-                </p>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-4">
-                <p class="text-gray-400 text-sm">Email</p>
-                <p class="text-heading font-medium"
-                   th:text="${user.email}">
-                </p>
-            </div>
-
-            <!-- Phone Number -->
-            <div class="mb-4">
-                <p class="text-gray-400 text-sm">Phone Number</p>
-                <p class="text-heading font-medium"
-                   th:text="${user.phoneNumber}">
-                </p>
-            </div>
-
-            <!-- About -->
-            <div class="mb-4">
-                <p class="text-gray-400 text-sm">About</p>
-                <p class="text-heading font-medium"
-                   th:text="${user.about}">
-                </p>
-            </div>
-
-            <!-- Provider -->
-            <div class="mb-4">
-                <p class="text-gray-400 text-sm">Login Provider</p>
-                <p class="text-heading font-medium"
-                   th:text="${user.provider}">
-                </p>
-            </div>
-
         </div>
 
     </div>

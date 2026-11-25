@@ -1,164 +1,388 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
-    <title>Add Contact</title>
+    <title>Add Contact | ContactSphere</title>
 </head>
 
 <body>
 
 <div id="content">
 
-    <div class="max-w-screen-md mx-auto px-4 py-8">
+    <main class="min-h-screen bg-slate-50 dark:bg-slate-900 px-5 py-10">
 
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            Add Contact
-        </h1>
+        <div class="max-w-3xl mx-auto">
 
-        <form th:action="@{/contacts}"
-              th:object="${contactForm}"
-              method="post"
-              class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+            <!-- Page Heading -->
+            <div class="mb-8">
 
-            <!-- CSRF -->
-            <input type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}">
+                <a th:href="@{/contacts}"
+                   class="inline-flex items-center gap-2
+                   text-sm font-medium text-blue-600
+                   dark:text-blue-400 hover:underline mb-5">
 
-            <!-- Name -->
-            <div class="mb-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Name
-                </label>
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Contacts
 
-                <input type="text"
-                       th:field="*{name}"
-                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-                       placeholder="Enter contact name">
+                </a>
 
-                <p th:if="${#fields.hasErrors('name')}"
-                    th:errors="*{name}"
-                    class="text-red-500 text-sm mt-1">
+                <span class="block text-sm font-semibold
+                    text-blue-600 dark:text-blue-400">
+                    CONTACT MANAGEMENT
+                </span>
+
+                <h1 class="text-3xl md:text-4xl font-bold
+                    text-slate-900 dark:text-white mt-2">
+                    Add New Contact
+                </h1>
+
+                <p class="text-slate-600 dark:text-slate-300 mt-2">
+                    Save important contact details and keep your connections organized.
                 </p>
+
             </div>
 
-            <!-- Email -->
-            <div class="mb-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Email
-                </label>
+            <!-- Form Card -->
+            <div class="bg-white dark:bg-slate-800
+                border border-slate-200 dark:border-slate-700
+                rounded-2xl shadow-sm p-6 md:p-8">
 
-                <input type="email"
-                       th:field="*{email}"
-                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-                       placeholder="Enter email">
+                <form th:action="@{/contacts}"
+                      th:object="${contactForm}"
+                      method="post"
+                      class="space-y-6">
 
-                <p th:if="${#fields.hasErrors('email')}"
-                    th:errors="*{email}"
-                    class="text-red-500 text-sm mt-1">
-                </p>
+                    <!-- CSRF -->
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}">
+
+                    <!-- Personal Information -->
+                    <div>
+
+                        <div class="flex items-center gap-3 mb-5">
+
+                            <div class="w-10 h-10 rounded-lg
+                                bg-blue-100 dark:bg-blue-900/40
+                                flex items-center justify-center
+                                text-blue-600 dark:text-blue-300">
+
+                                <i class="fa-solid fa-user"></i>
+
+                            </div>
+
+                            <div>
+                                <h2 class="text-lg font-bold
+                                    text-slate-900 dark:text-white">
+                                    Personal Information
+                                </h2>
+
+                                <p class="text-sm text-slate-500 dark:text-slate-400">
+                                    Enter the contact's basic details.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Name -->
+                        <div class="mb-5">
+
+                            <label for="name"
+                                   class="block text-sm font-semibold
+                                   text-slate-700 dark:text-slate-200 mb-2">
+                                Full Name <span class="text-red-500">*</span>
+                            </label>
+
+                            <input id="name"
+                                   type="text"
+                                   th:field="*{name}"
+                                   placeholder="Enter full name"
+                                   class="w-full px-4 py-3 rounded-lg
+                                   border border-slate-300 dark:border-slate-600
+                                   bg-white dark:bg-slate-700
+                                   text-slate-900 dark:text-white
+                                   placeholder-slate-400
+                                   focus:outline-none focus:ring-2
+                                   focus:ring-blue-500 focus:border-blue-500">
+
+                            <p th:if="${#fields.hasErrors('name')}"
+                               th:errors="*{name}"
+                               class="text-red-500 text-sm mt-2">
+                            </p>
+
+                        </div>
+
+                        <!-- Email and Phone -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                            <div>
+
+                                <label for="email"
+                                       class="block text-sm font-semibold
+                                       text-slate-700 dark:text-slate-200 mb-2">
+                                    Email Address
+                                </label>
+
+                                <input id="email"
+                                       type="email"
+                                       th:field="*{email}"
+                                       placeholder="example@email.com"
+                                       class="w-full px-4 py-3 rounded-lg
+                                       border border-slate-300 dark:border-slate-600
+                                       bg-white dark:bg-slate-700
+                                       text-slate-900 dark:text-white
+                                       placeholder-slate-400
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-blue-500">
+
+                                <p th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}"
+                                   class="text-red-500 text-sm mt-2">
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <label for="phoneNumber"
+                                       class="block text-sm font-semibold
+                                       text-slate-700 dark:text-slate-200 mb-2">
+                                    Phone Number
+                                </label>
+
+                                <input id="phoneNumber"
+                                       type="text"
+                                       th:field="*{phoneNumber}"
+                                       placeholder="+91 9876543210"
+                                       class="w-full px-4 py-3 rounded-lg
+                                       border border-slate-300 dark:border-slate-600
+                                       bg-white dark:bg-slate-700
+                                       text-slate-900 dark:text-white
+                                       placeholder-slate-400
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-blue-500">
+
+                                <p th:if="${#fields.hasErrors('phoneNumber')}"
+                                   th:errors="*{phoneNumber}"
+                                   class="text-red-500 text-sm mt-2">
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mt-5">
+
+                            <label for="address"
+                                   class="block text-sm font-semibold
+                                   text-slate-700 dark:text-slate-200 mb-2">
+                                Address
+                            </label>
+
+                            <input id="address"
+                                   type="text"
+                                   th:field="*{address}"
+                                   placeholder="Enter address"
+                                   class="w-full px-4 py-3 rounded-lg
+                                   border border-slate-300 dark:border-slate-600
+                                   bg-white dark:bg-slate-700
+                                   text-slate-900 dark:text-white
+                                   placeholder-slate-400
+                                   focus:outline-none focus:ring-2
+                                   focus:ring-blue-500">
+
+                            <p th:if="${#fields.hasErrors('address')}"
+                               th:errors="*{address}"
+                               class="text-red-500 text-sm mt-2">
+                            </p>
+
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mt-5">
+
+                            <label for="description"
+                                   class="block text-sm font-semibold
+                                   text-slate-700 dark:text-slate-200 mb-2">
+                                Description
+                            </label>
+
+                            <textarea id="description"
+                                      th:field="*{description}"
+                                      rows="4"
+                                      placeholder="Write something about this contact..."
+                                      class="w-full px-4 py-3 rounded-lg
+                                      border border-slate-300 dark:border-slate-600
+                                      bg-white dark:bg-slate-700
+                                      text-slate-900 dark:text-white
+                                      placeholder-slate-400 resize-y
+                                      focus:outline-none focus:ring-2
+                                      focus:ring-blue-500">
+                            </textarea>
+
+                            <p th:if="${#fields.hasErrors('description')}"
+                               th:errors="*{description}"
+                               class="text-red-500 text-sm mt-2">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Social / Web Information -->
+                    <div class="border-t border-slate-200
+                        dark:border-slate-700 pt-6">
+
+                        <div class="flex items-center gap-3 mb-5">
+
+                            <div class="w-10 h-10 rounded-lg
+                                bg-purple-100 dark:bg-purple-900/40
+                                flex items-center justify-center
+                                text-purple-600 dark:text-purple-300">
+
+                                <i class="fa-solid fa-link"></i>
+
+                            </div>
+
+                            <div>
+                                <h2 class="text-lg font-bold
+                                    text-slate-900 dark:text-white">
+                                    Online Presence
+                                </h2>
+
+                                <p class="text-sm text-slate-500 dark:text-slate-400">
+                                    Add website and professional profile links.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Website -->
+                        <div class="mb-5">
+
+                            <label for="websiteLink"
+                                   class="block text-sm font-semibold
+                                   text-slate-700 dark:text-slate-200 mb-2">
+                                Website
+                            </label>
+
+                            <div class="relative">
+
+                                <i class="fa-solid fa-globe
+                                    absolute left-4 top-1/2 -translate-y-1/2
+                                    text-slate-400"></i>
+
+                                <input id="websiteLink"
+                                       type="url"
+                                       th:field="*{websiteLink}"
+                                       placeholder="https://example.com"
+                                       class="w-full pl-11 pr-4 py-3 rounded-lg
+                                       border border-slate-300 dark:border-slate-600
+                                       bg-white dark:bg-slate-700
+                                       text-slate-900 dark:text-white
+                                       placeholder-slate-400
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-blue-500">
+
+                            </div>
+
+                            <p th:if="${#fields.hasErrors('websiteLink')}"
+                               th:errors="*{websiteLink}"
+                               class="text-red-500 text-sm mt-2">
+                            </p>
+
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div>
+
+                            <label for="linkedInLink"
+                                   class="block text-sm font-semibold
+                                   text-slate-700 dark:text-slate-200 mb-2">
+                                LinkedIn Profile
+                            </label>
+
+                            <div class="relative">
+
+                                <i class="fa-brands fa-linkedin
+                                    absolute left-4 top-1/2 -translate-y-1/2
+                                    text-slate-400"></i>
+
+                                <input id="linkedInLink"
+                                       type="url"
+                                       th:field="*{linkedInLink}"
+                                       placeholder="https://linkedin.com/in/username"
+                                       class="w-full pl-11 pr-4 py-3 rounded-lg
+                                       border border-slate-300 dark:border-slate-600
+                                       bg-white dark:bg-slate-700
+                                       text-slate-900 dark:text-white
+                                       placeholder-slate-400
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-blue-500">
+
+                            </div>
+
+                            <p th:if="${#fields.hasErrors('linkedInLink')}"
+                               th:errors="*{linkedInLink}"
+                               class="text-red-500 text-sm mt-2">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="border-t border-slate-200
+                        dark:border-slate-700 pt-6
+                        flex flex-col-reverse sm:flex-row
+                        justify-end gap-3">
+
+                        <a th:href="@{/contacts}"
+                           class="inline-flex items-center justify-center
+                           gap-2 px-6 py-3 rounded-lg
+                           border border-slate-300 dark:border-slate-600
+                           text-slate-700 dark:text-slate-200
+                           hover:bg-slate-100 dark:hover:bg-slate-700
+                           font-semibold transition-colors">
+
+                            Cancel
+
+                        </a>
+
+                        <button type="submit"
+                                class="inline-flex items-center justify-center
+                                gap-2 px-6 py-3 rounded-lg
+                                bg-blue-600 hover:bg-blue-700
+                                text-white font-semibold
+                                shadow-sm transition-colors">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Save Contact
+
+                        </button>
+
+                    </div>
+
+                </form>
+
             </div>
 
-            <!-- Phone -->
-            <div class="mb-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Phone Number
-                </label>
+            <p class="text-center text-sm text-slate-500
+                dark:text-slate-400 mt-6">
+                Your contact information is stored securely in ContactSphere.
+            </p>
 
-                <input type="text"
-                       th:field="*{phoneNumber}"
-                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-                       placeholder="Enter phone number">
+        </div>
 
-                <p th:if="${#fields.hasErrors('phoneNumber')}"
-                    th:errors="*{phoneNumber}"
-                    class="text-red-500 text-sm mt-1">
-                </p>
-            </div>
-
-            <!-- Address -->
-            <div class="mb-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Address
-                </label>
-
-                <input type="text"
-                       th:field="*{address}"
-                       class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-                       placeholder="Enter address">
-
-                <p th:if="${#fields.hasErrors('address')}"
-                    th:errors="*{address}"
-                    class="text-red-500 text-sm mt-1">
-                </p>
-            </div>
-
-            <!-- Description -->
-            <div class="mb-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Description
-                </label>
-
-                <textarea th:field="*{description}"
-                          rows="4"
-                          class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-                          placeholder="Write something about this contact">
-                </textarea>
-
-                <p th:if="${#fields.hasErrors('description')}"
-                    th:errors="*{description}"
-                    class="text-red-500 text-sm mt-1">
-                </p>
-            </div>
-
-            <!-- Website -->
-<div class="mb-4">
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Website
-    </label>
-
-    <input type="url"
-           th:field="*{websiteLink}"
-           class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-           placeholder="https://example.com">
-
-    <p th:if="${#fields.hasErrors('websiteLink')}"
-       th:errors="*{websiteLink}"
-       class="text-red-500 text-sm mt-1">
-    </p>
-</div>
-
-<!-- LinkedIn -->
-<div class="mb-5">
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        LinkedIn
-    </label>
-
-    <input type="url"
-           th:field="*{linkedInLink}"
-           class="w-full px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white"
-           placeholder="https://linkedin.com/in/example">
-
-    <p th:if="${#fields.hasErrors('linkedInLink')}"
-       th:errors="*{linkedInLink}"
-       class="text-red-500 text-sm mt-1">
-    </p>
-</div>
-
-            <button type="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">
-                Save Contact
-            </button>
-
-        </form>
-
-    </div>
+    </main>
 
 </div>
 
 <script>
-    console.log("Add Contact page");
+    console.log("Add Contact page loaded");
 </script>
 
 </body>

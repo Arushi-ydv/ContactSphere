@@ -1,137 +1,180 @@
+
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
-    <title>Contact Us</title>
+    <title>Contact Us | ContactSphere</title>
 </head>
 
 <body>
 
 <div id="content">
 
-    <div class="max-w-6xl mx-auto px-6 py-10">
+    <main class="min-h-[80vh] bg-slate-50 dark:bg-slate-900 px-5 py-12 md:py-16">
 
-        <!-- Heading -->
-        <div class="text-center mb-10">
+        <div class="max-w-6xl mx-auto">
 
-            <h1 class="text-4xl font-bold text-heading mb-3">
-                Contact Us
-            </h1>
+            <!-- Heading -->
+            <section class="text-center max-w-3xl mx-auto mb-14">
 
-            <p class="text-gray-400">
-                Have a question or need help? Feel free to get in touch with us.
-            </p>
+                <span class="inline-block px-4 py-2 mb-5 rounded-full
+                    bg-blue-100 text-blue-700
+                    dark:bg-blue-900/40 dark:text-blue-300
+                    text-sm font-semibold">
+                    Contact Us
+                </span>
 
-        </div>
+                <h1 class="text-4xl md:text-5xl font-bold
+                    text-slate-900 dark:text-white mb-5">
+                    Let's Get in
+                    <span class="text-blue-600 dark:text-blue-400">
+                        Touch
+                    </span>
+                </h1>
 
+                <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Have a question, suggestion or feedback?
+                    We'd be happy to hear from you.
+                </p>
 
-        <!-- Contact Information -->
-        <div class="grid grid-cols-12 gap-6">
+            </section>
 
-            <!-- Email -->
-            <div class="col-span-12 md:col-span-4">
+            <!-- Contact Cards -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                <!-- Email -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-7 text-center">
 
-                    <div class="text-3xl mb-4">
+                    <div class="w-14 h-14 mx-auto mb-5 rounded-xl
+                        bg-blue-100 dark:bg-blue-900/40
+                        flex items-center justify-center text-2xl">
                         📧
                     </div>
 
-                    <h2 class="text-xl font-semibold text-heading mb-2">
-                        Email
+                    <h2 class="text-xl font-bold text-slate-900
+                        dark:text-white mb-3">
+                        Email Support
                     </h2>
 
-                    <p class="text-gray-400 mb-3">
-                        You can reach us through email.
+                    <p class="text-slate-600 dark:text-slate-300 mb-4">
+                        Send us your questions and feedback through email.
                     </p>
 
                     <a href="mailto:contactsphere@gmail.com"
-                       class="text-blue-500 hover:underline">
+                       class="font-semibold text-blue-600 dark:text-blue-400
+                       hover:underline break-all">
                         contactsphere@gmail.com
                     </a>
 
-                </div>
+                </article>
 
-            </div>
+                <!-- Help -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-7 text-center">
 
-
-            <!-- Phone -->
-            <div class="col-span-12 md:col-span-4">
-
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-
-                    <div class="text-3xl mb-4">
-                        📞
+                    <div class="w-14 h-14 mx-auto mb-5 rounded-xl
+                        bg-purple-100 dark:bg-purple-900/30
+                        flex items-center justify-center text-2xl">
+                        💬
                     </div>
 
-                    <h2 class="text-xl font-semibold text-heading mb-2">
-                        Phone
+                    <h2 class="text-xl font-bold text-slate-900
+                        dark:text-white mb-3">
+                        Questions & Feedback
                     </h2>
 
-                    <p class="text-gray-400 mb-3">
-                        We're available during business hours.
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Have ideas to improve ContactSphere?
+                        Share your suggestions with us.
                     </p>
 
-                    <a href="tel:+919999999999"
-                       class="text-blue-500 hover:underline">
-                        +91 99999 99999
-                    </a>
+                </article>
 
-                </div>
+                <!-- Platform -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-7 text-center">
 
-            </div>
-
-
-            <!-- Location -->
-            <div class="col-span-12 md:col-span-4">
-
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-
-                    <div class="text-3xl mb-4">
-                        📍
+                    <div class="w-14 h-14 mx-auto mb-5 rounded-xl
+                        bg-green-100 dark:bg-green-900/30
+                        flex items-center justify-center text-2xl">
+                        🌐
                     </div>
 
-                    <h2 class="text-xl font-semibold text-heading mb-2">
-                        Location
+                    <h2 class="text-xl font-bold text-slate-900
+                        dark:text-white mb-3">
+                        ContactSphere
                     </h2>
 
-                    <p class="text-gray-400">
-                        India
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Your platform for managing personal and
+                        professional contacts in one place.
                     </p>
+
+                </article>
+
+            </section>
+
+            <!-- Get in Touch -->
+            <section class="mt-8 bg-white dark:bg-slate-800
+                border border-slate-200 dark:border-slate-700
+                rounded-2xl shadow-sm p-8 md:p-10">
+
+                <div class="max-w-3xl">
+
+                    <h2 class="text-2xl md:text-3xl font-bold
+                        text-slate-900 dark:text-white mb-5">
+                        We'd Love to Hear From You
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-300 leading-7">
+                        ContactSphere helps you manage your contacts in one place.
+                        You can organize contact information, manage favourites,
+                        add social links and keep important details easily accessible.
+                    </p>
+
+                    <p class="text-slate-600 dark:text-slate-300 leading-7 mt-4">
+                        If you have any questions, suggestions or feedback
+                        about ContactSphere, feel free to contact us.
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 mt-7">
+
+                        <!-- Email Button -->
+                        <a href="mailto:contactsphere@gmail.com"
+                           class="inline-flex items-center gap-2
+                           bg-blue-600 hover:bg-blue-700 text-white
+                           font-semibold px-6 py-3 rounded-lg transition-colors">
+
+                            <i class="fa-solid fa-envelope"></i>
+                            Email Us
+
+                        </a>
+
+                        <!-- Feedback Button -->
+                        <a th:href="@{/feedback}"
+                           class="inline-flex items-center gap-2
+                           bg-purple-600 hover:bg-purple-700 text-white
+                           font-semibold px-6 py-3 rounded-lg transition-colors">
+
+                            💬 Give Feedback
+
+                        </a>
+
+                    </div>
 
                 </div>
 
-            </div>
+            </section>
 
         </div>
 
-
-        <!-- About ContactSphere -->
-        <div class="mt-8">
-
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-
-                <h2 class="text-2xl font-semibold text-heading mb-4">
-                    Get in Touch
-                </h2>
-
-                <p class="text-gray-400 leading-7">
-                    ContactSphere helps you manage your contacts in one place.
-                    You can organize contact information, manage favourites,
-                    add social links, and keep your important contact details
-                    easily accessible.
-                </p>
-
-                <p class="text-gray-400 leading-7 mt-4">
-                    If you have any questions, suggestions, or feedback about
-                    ContactSphere, feel free to contact us.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
+    </main>
 
 </div>
 

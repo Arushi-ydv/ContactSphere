@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.contactsphere.entities.User;
 import com.contactsphere.entities.VerificationToken;
@@ -14,5 +15,6 @@ public interface VerificationTokenRepo extends JpaRepository<VerificationToken, 
     
     Optional<VerificationToken> findByToken(String token);
 
+    @Transactional
     void deleteByUser(User user);
 }

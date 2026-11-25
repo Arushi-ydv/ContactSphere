@@ -1,212 +1,318 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
-    <title>Dashboard</title>
+    <title>Dashboard | ContactSphere</title>
 </head>
 
 <body>
 
 <div id="content">
 
-    <div class="max-w-7xl mx-auto px-6 py-8">
+    <main class="min-h-screen bg-slate-50 dark:bg-slate-900 px-5 py-10">
 
-        <!-- Welcome -->
-        <div class="mb-8">
+        <div class="max-w-7xl mx-auto">
 
-            <h1 class="text-3xl font-bold text-heading">
-                Welcome,
-                <span th:text="${user.name}">User</span>
-            </h1>
+            <!-- Welcome -->
+            <section class="mb-10">
 
-            <p class="text-gray-400 mt-2">
-                Manage your contacts and keep everything organized.
-            </p>
+                <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                    YOUR DASHBOARD
+                </span>
 
-        </div>
+                <h1 class="text-3xl md:text-4xl font-bold
+                    text-slate-900 dark:text-white mt-2">
+                    Welcome,
+                    <span th:text="${user.name}">User</span>!
+                </h1>
 
+                <p class="text-slate-600 dark:text-slate-300 mt-3">
+                    Manage your contacts and keep everything organized.
+                </p>
 
-        <!-- Statistics -->
-        <div class="grid grid-cols-12 gap-6 mb-8">
+            </section>
 
-            <!-- Total Contacts -->
-            <div class="col-span-12 md:col-span-4">
+            <!-- Statistics -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <!-- Total Contacts -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-6">
 
-                    <p class="text-gray-400">
-                        Total Contacts
-                    </p>
-
-                    <h2 class="text-4xl font-bold text-heading mt-2"
-                        th:text="${totalContacts}">
-                        0
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <!-- Favourite Contacts -->
-            <div class="col-span-12 md:col-span-4">
-
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-
-                    <p class="text-gray-400">
-                        Favourite Contacts
-                    </p>
-
-                    <h2 class="text-4xl font-bold text-heading mt-2"
-                        th:text="${favouriteContacts}">
-                        0
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <!-- Social Links -->
-            <div class="col-span-12 md:col-span-4">
-
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-
-                    <p class="text-gray-400">
-                        Social Links
-                    </p>
-
-                    <h2 class="text-4xl font-bold text-heading mt-2"
-                        th:text="${socialLinks}">
-                        0
-                    </h2>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Quick Actions -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-
-            <h2 class="text-2xl font-semibold text-heading mb-5">
-                Quick Actions
-            </h2>
-
-            <div class="flex flex-wrap gap-4">
-
-                <a href="/contacts"
-                   class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-                    View Contacts
-                </a>
-
-                <a href="/contacts/add"
-                   class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg">
-                    Add Contact
-                </a>
-
-                <a href="/profile"
-                   class="px-5 py-2.5 bg-gray-600 hover:bg-gray-700 text-white rounded-lg">
-                    My Profile
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- Contacts -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-
-            <div class="flex justify-between items-center mb-5">
-
-                <h2 class="text-2xl font-semibold text-heading">
-                    My Contacts
-                </h2>
-
-                <a href="/contacts"
-                   class="text-blue-500 hover:underline">
-                    View All
-                </a>
-
-            </div>
-
-
-            <!-- No contacts -->
-            <div th:if="${#lists.isEmpty(contacts)}"
-                 class="text-gray-400">
-
-                You don't have any contacts yet.
-
-                <a href="/contacts/add"
-                   class="text-blue-500 hover:underline">
-                    Add your first contact
-                </a>
-
-            </div>
-
-
-            <!-- Contacts exist -->
-            <div th:unless="${#lists.isEmpty(contacts)}"
-                 class="space-y-4">
-
-                <div th:each="contact : ${contacts}"
-                     class="border border-gray-700 rounded-lg p-4">
-
-                    <div class="flex justify-between items-center">
+                    <div class="flex items-center justify-between">
 
                         <div>
-
-                            <h3 class="text-lg font-semibold text-heading"
-                                th:text="${contact.name}">
-                                Contact Name
-                            </h3>
-
-                            <p class="text-gray-400"
-                               th:text="${contact.email}">
-                                email@example.com
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                Total Contacts
                             </p>
 
-                            <p class="text-gray-400"
-                               th:text="${contact.phoneNumber}">
-                                Phone
-                            </p>
-
+                            <h2 class="text-4xl font-bold text-slate-900
+                                dark:text-white mt-3"
+                                th:text="${totalContacts}">
+                                0
+                            </h2>
                         </div>
 
-
-                        <div class="flex items-center gap-3">
-
-                            <span th:if="${contact.favourite}"
-                                  class="text-yellow-400">
-                                ★ Favourite
-                            </span>
-
-                            <a th:href="@{'/contacts/' + ${contact.id}}"
-                               class="text-blue-500 hover:underline">
-                                View
-                            </a>
-
+                        <div class="w-14 h-14 rounded-xl bg-blue-100
+                            dark:bg-blue-900/40 flex items-center
+                            justify-center text-blue-600 dark:text-blue-300 text-2xl">
+                            <i class="fa-solid fa-address-book"></i>
                         </div>
 
                     </div>
 
+                </article>
+
+                <!-- Favourite Contacts -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                Favourite Contacts
+                            </p>
+
+                            <h2 class="text-4xl font-bold text-slate-900
+                                dark:text-white mt-3"
+                                th:text="${favouriteContacts}">
+                                0
+                            </h2>
+                        </div>
+
+                        <div class="w-14 h-14 rounded-xl bg-yellow-100
+                            dark:bg-yellow-900/30 flex items-center
+                            justify-center text-yellow-600 dark:text-yellow-300 text-2xl">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- Social Links -->
+                <article class="bg-white dark:bg-slate-800 rounded-2xl
+                    border border-slate-200 dark:border-slate-700
+                    shadow-sm p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                Social Links
+                            </p>
+
+                            <h2 class="text-4xl font-bold text-slate-900
+                                dark:text-white mt-3"
+                                th:text="${socialLinks}">
+                                0
+                            </h2>
+                        </div>
+
+                        <div class="w-14 h-14 rounded-xl bg-purple-100
+                            dark:bg-purple-900/30 flex items-center
+                            justify-center text-purple-600 dark:text-purple-300 text-2xl">
+                            <i class="fa-solid fa-link"></i>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="bg-white dark:bg-slate-800 rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                shadow-sm p-6 md:p-8 mb-10">
+
+                <div class="mb-6">
+
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+                        Quick Actions
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-300 mt-2">
+                        Quickly access the features you use most.
+                    </p>
+
                 </div>
 
-            </div>
+                <div class="flex flex-wrap gap-3">
+
+                    <a href="/contacts"
+                       class="inline-flex items-center gap-2 px-5 py-3
+                       bg-blue-600 hover:bg-blue-700 text-white
+                       rounded-lg font-medium transition-colors">
+
+                        <i class="fa-solid fa-address-book"></i>
+                        View Contacts
+
+                    </a>
+
+                    <a href="/contacts/add"
+                       class="inline-flex items-center gap-2 px-5 py-3
+                       bg-green-600 hover:bg-green-700 text-white
+                       rounded-lg font-medium transition-colors">
+
+                        <i class="fa-solid fa-plus"></i>
+                        Add Contact
+
+                    </a>
+
+                    <a href="/profile"
+                       class="inline-flex items-center gap-2 px-5 py-3
+                       bg-slate-600 hover:bg-slate-700 text-white
+                       rounded-lg font-medium transition-colors">
+
+                        <i class="fa-solid fa-user"></i>
+                        My Profile
+
+                    </a>
+
+                </div>
+
+            </section>
+
+            <!-- Contacts -->
+            <section class="bg-white dark:bg-slate-800 rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                shadow-sm p-6 md:p-8">
+
+                <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+                            My Contacts
+                        </h2>
+
+                        <p class="text-slate-600 dark:text-slate-300 mt-1">
+                            Your recently available contacts.
+                        </p>
+                    </div>
+
+                    <a href="/contacts"
+                       class="inline-flex items-center gap-2
+                       text-blue-600 dark:text-blue-400
+                       hover:underline font-semibold">
+
+                        View All
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+                <!-- No Contacts -->
+                <div th:if="${#lists.isEmpty(contacts)}"
+                     class="text-center py-12">
+
+                    <div class="w-16 h-16 rounded-full mx-auto mb-4
+                        bg-slate-100 dark:bg-slate-700
+                        flex items-center justify-center
+                        text-slate-500 dark:text-slate-300 text-2xl">
+
+                        <i class="fa-solid fa-address-book"></i>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                        No Contacts Yet
+                    </h3>
+
+                    <p class="text-slate-600 dark:text-slate-300 mb-5">
+                        Start building your contact list by adding your first contact.
+                    </p>
+
+                    <a href="/contacts/add"
+                       class="inline-flex items-center gap-2
+                       bg-blue-600 hover:bg-blue-700 text-white
+                       px-5 py-2.5 rounded-lg font-medium">
+
+                        <i class="fa-solid fa-plus"></i>
+                        Add Your First Contact
+
+                    </a>
+
+                </div>
+
+                <!-- Contacts Exist -->
+                <div th:unless="${#lists.isEmpty(contacts)}"
+                     class="space-y-4">
+
+                    <article th:each="contact : ${contacts}"
+                         class="border border-slate-200 dark:border-slate-700
+                         rounded-xl p-5 hover:bg-slate-50
+                         dark:hover:bg-slate-700/40 transition-colors">
+
+                        <div class="flex flex-col sm:flex-row
+                            sm:justify-between sm:items-center gap-4">
+
+                            <div class="min-w-0">
+
+                                <h3 class="text-lg font-semibold
+                                    text-slate-900 dark:text-white"
+                                    th:text="${contact.name}">
+                                    Contact Name
+                                </h3>
+
+                                <p class="text-slate-600 dark:text-slate-300 mt-2 break-all"
+                                   th:text="${contact.email}">
+                                    email@example.com
+                                </p>
+
+                                <p class="text-slate-600 dark:text-slate-300 mt-1"
+                                   th:text="${contact.phoneNumber}">
+                                    Phone
+                                </p>
+
+                            </div>
+
+                            <div class="flex items-center gap-4">
+
+                                <span th:if="${contact.favourite}"
+                                      class="inline-flex items-center gap-1
+                                      text-yellow-600 dark:text-yellow-400
+                                      text-sm font-semibold whitespace-nowrap">
+
+                                    <i class="fa-solid fa-star"></i>
+                                    Favourite
+
+                                </span>
+
+                                <a th:href="@{'/contacts/' + ${contact.id}}"
+                                   class="inline-flex items-center gap-2
+                                   text-blue-600 dark:text-blue-400
+                                   hover:underline font-semibold">
+
+                                    View
+                                    <i class="fa-solid fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
 
         </div>
 
-    </div>
+    </main>
 
 </div>
 
-
 <script>
-    console.log("Dashboard");
+    console.log("Dashboard loaded");
 </script>
 
 </body>

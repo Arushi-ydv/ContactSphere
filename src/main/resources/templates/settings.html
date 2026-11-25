@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
@@ -10,26 +11,87 @@
 
 <div id="content">
 
-    <div class="max-w-3xl mx-auto mt-6">
+    <div class="max-w-4xl mx-auto px-4 py-10 sm:py-12">
 
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <p class="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+                Account Management
+            </p>
 
-            <h1 class="text-2xl font-semibold text-heading mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
                 Settings
             </h1>
 
-            <a th:href="@{/settings/change-password}"
-               class="block p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <p class="mt-2 text-gray-500 dark:text-gray-400">
+                Manage your account preferences and security.
+            </p>
+        </div>
 
-                <h2 class="text-lg font-medium text-heading">
-                    Change Password
-                </h2>
+        <!-- Settings Card -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
 
-                <p class="text-sm text-gray-500 mt-1">
-                    Update your account password.
+            <!-- Security Section -->
+            <div class="p-6 sm:p-8">
+
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 text-xl">
+                        🔒
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                            Security
+                        </h2>
+
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Keep your account secure.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <a th:href="@{/settings/change-password}"
+                   class="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/40 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="flex items-center justify-center w-11 h-11 rounded-lg bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm text-xl">
+                            🔑
+                        </div>
+
+                        <div>
+                            <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+                                Change Password
+                            </h3>
+
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                Update your account password.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 sm:ml-4">
+                        Manage
+                        <span class="text-lg transition-transform group-hover:translate-x-1">→</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+            <!-- Bottom Information -->
+            <div class="border-t border-gray-200 dark:border-gray-700 px-6 sm:px-8 py-5 bg-gray-50 dark:bg-gray-800/60">
+
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-semibold text-gray-700 dark:text-gray-300">
+                        Security Tip:
+                    </span>
+                    Use a strong password and avoid sharing your account credentials.
                 </p>
 
-            </a>
+            </div>
 
         </div>
 

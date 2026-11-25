@@ -1,132 +1,356 @@
+
 <!DOCTYPE html>
 <html lang="en"
       th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
 
 <head>
-    <title>My Contacts</title>
+    <title>My Contacts | ContactSphere</title>
 </head>
 
 <body>
 
 <div id="content">
 
-    <div class="max-w-screen-xl mx-auto px-4 py-8">
+    <main class="min-h-screen bg-slate-50 dark:bg-slate-900 px-5 py-10">
 
-        <div class="mb-6">
+        <div class="max-w-7xl mx-auto">
 
-    <div class="flex items-center justify-between mb-4">
+            <!-- Page Heading -->
+            <section class="mb-8">
 
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-            My Contacts
-        </h1>
+                <div class="flex flex-col lg:flex-row lg:items-center
+                    justify-between gap-5 mb-7">
 
-        <div class="flex gap-2">
+                    <div>
+                        <span class="text-sm font-semibold
+                            text-blue-600 dark:text-blue-400">
+                            CONTACT MANAGEMENT
+                        </span>
 
-    <a th:href="@{/contacts/export/excel}"
-       class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2">
-        Export Excel
-    </a>
+                        <h1 class="text-3xl md:text-4xl font-bold
+                            text-slate-900 dark:text-white mt-2">
+                            My Contacts
+                        </h1>
 
-    <a th:href="@{/contacts/export/pdf}"
-       class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2">
-        Export PDF
-    </a>
+                        <p class="text-slate-600 dark:text-slate-300 mt-2">
+                            Manage and organize your important connections.
+                        </p>
+                    </div>
 
-    <a th:href="@{/contacts/add}"
-       class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
-        Add Contact
-    </a>
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap gap-2">
 
-</div>
-    </div>
+                        <a th:href="@{/contacts/export/excel}"
+                           class="inline-flex items-center gap-2
+                           bg-green-600 hover:bg-green-700
+                           text-white font-medium text-sm
+                           px-4 py-2.5 rounded-lg transition-colors">
 
-    <!-- Search -->
-    <form th:action="@{/contacts}"
-          method="get"
-          class="flex gap-2">
+                            <i class="fa-solid fa-file-excel"></i>
+                            Export Excel
 
-        <input type="text"
-               name="keyword"
-               th:value="${keyword}"
-               placeholder="Search contacts..."
-               class="flex-1 px-3 py-2 border rounded-lg bg-white text-gray-900 dark:bg-gray-700 dark:text-white">
+                        </a>
 
-        <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2">
-            Search
-        </button>
+                        <a th:href="@{/contacts/export/pdf}"
+                           class="inline-flex items-center gap-2
+                           bg-red-600 hover:bg-red-700
+                           text-white font-medium text-sm
+                           px-4 py-2.5 rounded-lg transition-colors">
 
-    </form>
+                            <i class="fa-solid fa-file-pdf"></i>
+                            Export PDF
 
-</div>
+                        </a>
 
-        <!-- No contacts -->
-        <div th:if="${#lists.isEmpty(contacts)}"
-             class="text-gray-500 dark:text-gray-300">
-            No contacts found.
-        </div>
+                        <a th:href="@{/contacts/add}"
+                           class="inline-flex items-center gap-2
+                           bg-blue-600 hover:bg-blue-700
+                           text-white font-medium text-sm
+                           px-4 py-2.5 rounded-lg transition-colors">
 
-        <!-- Contact cards -->
-        <div th:unless="${#lists.isEmpty(contacts)}"
-             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <i class="fa-solid fa-plus"></i>
+                            Add Contact
 
-            <div th:each="contact : ${contacts}"
-                 class="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
+                        </a>
 
-                <a th:href="@{'/contacts/' + ${contact.id}}"
-                    class="text-xl font-semibold text-gray-900 dark:text-white hover:text-blue-600">
-                    <span th:text="${contact.name}">Contact Name</span>
+                    </div>
+
+                </div>
+
+                <!-- Search -->
+                <form th:action="@{/contacts}"
+                      method="get"
+                      class="flex flex-col sm:flex-row gap-3">
+
+                    <div class="relative flex-1">
+
+                        <i class="fa-solid fa-magnifying-glass
+                            absolute left-4 top-1/2 -translate-y-1/2
+                            text-slate-400"></i>
+
+                        <input type="text"
+                               name="keyword"
+                               th:value="${keyword}"
+                               placeholder="Search contacts by name..."
+                               class="w-full pl-11 pr-4 py-3 rounded-xl
+                               border border-slate-300 dark:border-slate-600
+                               bg-white dark:bg-slate-800
+                               text-slate-900 dark:text-white
+                               placeholder-slate-400
+                               focus:outline-none focus:ring-2
+                               focus:ring-blue-500">
+
+                    </div>
+
+                    <button type="submit"
+                            class="inline-flex items-center justify-center
+                            gap-2 px-6 py-3 rounded-xl
+                            bg-blue-600 hover:bg-blue-700
+                            text-white font-semibold transition-colors">
+
+                        <i class="fa-solid fa-search"></i>
+                        Search
+
+                    </button>
+
+                    <a th:href="@{/contacts}"
+                       class="inline-flex items-center justify-center
+                       px-5 py-3 rounded-xl
+                       border border-slate-300 dark:border-slate-600
+                       text-slate-700 dark:text-slate-200
+                       hover:bg-slate-100 dark:hover:bg-slate-700
+                       font-medium transition-colors">
+
+                        Clear
+
+                    </a>
+
+                </form>
+
+            </section>
+
+            <!-- No Contacts / No Search Results -->
+            <section th:if="${#lists.isEmpty(contacts)}"
+                     class="bg-white dark:bg-slate-800
+                     border border-slate-200 dark:border-slate-700
+                     rounded-2xl shadow-sm text-center py-16 px-5">
+
+                <div class="w-16 h-16 rounded-full mx-auto mb-5
+                    bg-blue-100 dark:bg-blue-900/40
+                    flex items-center justify-center
+                    text-blue-600 dark:text-blue-300 text-2xl">
+
+                    <i class="fa-solid fa-address-book"></i>
+
+                </div>
+
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3"
+                    th:if="${keyword == null or #strings.isEmpty(keyword)}">
+                    No Contacts Yet
+                </h2>
+
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3"
+                    th:if="${keyword != null and !#strings.isEmpty(keyword)}">
+                    No Matching Contacts
+                </h2>
+
+                <p class="text-slate-600 dark:text-slate-300 mb-6"
+                   th:if="${keyword == null or #strings.isEmpty(keyword)}">
+                    Start building your contact list by adding your first contact.
+                </p>
+
+                <p class="text-slate-600 dark:text-slate-300 mb-6"
+                   th:if="${keyword != null and !#strings.isEmpty(keyword)}">
+                    No contacts match your search. Try another name.
+                </p>
+
+                <a th:if="${keyword == null or #strings.isEmpty(keyword)}"
+                   th:href="@{/contacts/add}"
+                   class="inline-flex items-center gap-2
+                   px-6 py-3 rounded-lg bg-blue-600
+                   hover:bg-blue-700 text-white font-semibold">
+
+                    <i class="fa-solid fa-plus"></i>
+                    Add Your First Contact
+
                 </a>
 
-                <p class="text-gray-500 mt-2"
-                   th:text="${contact.email}">
-                    Email
-                </p>
+                <a th:if="${keyword != null and !#strings.isEmpty(keyword)}"
+                   th:href="@{/contacts}"
+                   class="inline-flex items-center gap-2
+                   px-6 py-3 rounded-lg bg-blue-600
+                   hover:bg-blue-700 text-white font-semibold">
 
-                <p class="text-gray-500 mt-1"
-                   th:text="${contact.phoneNumber}">
-                    Phone
-                </p>
+                    View All Contacts
 
-            </div>
+                </a>
+
+            </section>
+
+            <!-- Contact Cards -->
+            <section th:unless="${#lists.isEmpty(contacts)}"
+                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <article th:each="contact : ${contacts}"
+                         class="bg-white dark:bg-slate-800
+                         border border-slate-200 dark:border-slate-700
+                         rounded-2xl shadow-sm p-6
+                         hover:shadow-lg transition-shadow">
+
+                    <!-- Contact Header -->
+                    <div class="flex items-start justify-between gap-3 mb-5">
+
+                        <div class="flex items-center gap-3 min-w-0">
+
+                            <div class="w-12 h-12 shrink-0 rounded-full
+                                bg-blue-100 dark:bg-blue-900/40
+                                flex items-center justify-center
+                                text-blue-600 dark:text-blue-300 text-lg">
+
+                                <i class="fa-solid fa-user"></i>
+
+                            </div>
+
+                            <div class="min-w-0">
+
+                                <a th:href="@{'/contacts/' + ${contact.id}}"
+                                   class="text-lg font-bold
+                                   text-slate-900 dark:text-white
+                                   hover:text-blue-600 dark:hover:text-blue-400
+                                   transition-colors break-words">
+
+                                    <span th:text="${contact.name}">
+                                        Contact Name
+                                    </span>
+
+                                </a>
+
+                                <span th:if="${contact.favourite}"
+                                      class="flex items-center gap-1 mt-1
+                                      text-xs font-semibold
+                                      text-yellow-600 dark:text-yellow-400">
+
+                                    <i class="fa-solid fa-star"></i>
+                                    Favourite
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Contact Details -->
+                    <div class="space-y-3">
+
+                        <p class="flex items-start gap-3
+                            text-sm text-slate-600 dark:text-slate-300">
+
+                            <i class="fa-solid fa-envelope
+                                text-blue-500 mt-1"></i>
+
+                            <span class="break-all"
+                                  th:text="${contact.email}">
+                                Email
+                            </span>
+
+                        </p>
+
+                        <p class="flex items-center gap-3
+                            text-sm text-slate-600 dark:text-slate-300">
+
+                            <i class="fa-solid fa-phone text-blue-500"></i>
+
+                            <span th:text="${contact.phoneNumber}">
+                                Phone
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                    <!-- Contact Actions -->
+                    <div class="border-t border-slate-200
+                        dark:border-slate-700 mt-5 pt-4
+                        flex flex-wrap items-center gap-4">
+
+                        <!-- View Details -->
+                        <a th:href="@{'/contacts/' + ${contact.id}}"
+                           class="inline-flex items-center gap-2
+                           text-blue-600 dark:text-blue-400
+                           font-semibold text-sm hover:underline">
+
+                            View Contact Details
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                        <!-- Send Email -->
+                        <a th:href="@{/send-email(to=${contact.email})}"
+                           class="inline-flex items-center gap-2
+                           text-green-600 dark:text-green-400
+                           font-semibold text-sm hover:underline">
+
+                            <i class="fa-solid fa-envelope"></i>
+                            Send Email
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- Pagination -->
+            <nav th:if="${totalPages > 1}"
+                 aria-label="Contact pagination"
+                 class="flex flex-wrap items-center justify-center gap-2 mt-10">
+
+                <!-- Previous -->
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/contacts(page=${currentPage - 1}, keyword=${keyword})}"
+                   class="px-4 py-2 rounded-lg
+                   border border-slate-300 dark:border-slate-600
+                   text-slate-700 dark:text-white
+                   hover:bg-slate-100 dark:hover:bg-slate-700">
+
+                    Previous
+
+                </a>
+
+                <!-- Page Numbers -->
+                <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                   th:href="@{/contacts(page=${i}, keyword=${keyword})}"
+                   th:text="${i + 1}"
+                   th:class="${i == currentPage}
+                       ? 'px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold'
+                       : 'px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700'">
+
+                </a>
+
+                <!-- Next -->
+                <a th:if="${currentPage < totalPages - 1}"
+                   th:href="@{/contacts(page=${currentPage + 1}, keyword=${keyword})}"
+                   class="px-4 py-2 rounded-lg
+                   bg-blue-600 hover:bg-blue-700
+                   text-white font-semibold">
+
+                    Next
+
+                </a>
+
+            </nav>
 
         </div>
 
-         <!-- Pagination -->
-        <div th:if="${totalPages > 1}"
-             class="flex justify-center gap-2 mt-8">
-
-            <!-- Previous button -->
-            <a th:if="${currentPage > 0}"
-               th:href="@{/contacts(page=${currentPage - 1}, keyword=${keyord})}"
-               class="px-4 py-2 bg-blue-700 text-white rounded-lg">
-                Previous
-            </a>
-
-
-            <!-- Page numbers -->
-            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-               th:href="@{/contacts(page=${i}, keyword=${keyword})}"
-               th:text="${i + 1}"
-               class="px-4 py-2 rounded-lg bg-gray-700 text-white">
-            </a>
-
-
-            <!-- Next button -->
-            <a th:if="${currentPage < totalPages - 1}"
-               th:href="@{/contacts(page=${currentPage + 1}, keyword=${keyword})}"
-               class="px-4 py-2 bg-blue-700 text-white rounded-lg">
-                Next
-            </a>
-
-        </div>
-
-    </div>
+    </main>
 
 </div>
 
 <script>
-    console.log("Contacts page");
+    console.log("Contacts page loaded");
 </script>
 
 </body>

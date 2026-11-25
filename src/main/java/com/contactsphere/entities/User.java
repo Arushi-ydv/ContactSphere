@@ -1,3 +1,4 @@
+
 package com.contactsphere.entities;
 
 import java.util.*;
@@ -15,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,14 +51,11 @@ public class User {
     @Column(length = 1000)
     private String about;
 
-    @Column(length = 1000)
-    private String profilePic;
-
     @Column(length = 20)
     private String phoneNumber;
 
     // Information
-    private boolean enabled=false;
+    private boolean enabled = false;
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
@@ -67,11 +66,11 @@ public class User {
     @Column(length = 255)
     private String providerUserId;
 
-    @OneToMany(mappedBy = "user",
-        cascade =  CascadeType.ALL, 
-        fetch = FetchType.LAZY, 
+    @OneToMany(
+        mappedBy = "user",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
         orphanRemoval = true
     )
     private List<Contact> contacts = new ArrayList<>();
-
 }

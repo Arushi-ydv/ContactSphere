@@ -1,19 +1,290 @@
+
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
-    <head>
-        <title>About Page</title>
-    </head>
-    <body>
-        <div id="content">
-            <h1>Welcome to about page</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores inventore, sequi corrupti earum dolore odio nam praesentium blanditiis debitis maxime adipisci excepturi quaerat sit aut in tempore ipsa iure molestiae!
-            </p>
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+
+<head>
+    <title>About ContactSphere</title>
+</head>
+
+<body>
+
+<div id="content">
+
+    <section class="min-h-[80vh] bg-slate-50 dark:bg-slate-900 px-6 py-16">
+
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Hero Section -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+
+                <span class="inline-block px-4 py-2 mb-5 rounded-full
+                    bg-blue-100 text-blue-700
+                    dark:bg-blue-900/40 dark:text-blue-300
+                    text-sm font-semibold">
+                    About ContactSphere
+                </span>
+
+                <h1 class="text-4xl md:text-5xl font-bold
+                    text-slate-900 dark:text-white mb-6">
+                    Manage Your Contacts,
+                    <span class="text-blue-600 dark:text-blue-400">
+                        Stay Connected
+                    </span>
+                </h1>
+
+                <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    ContactSphere is a secure contact management application
+                    that helps you organize, manage and access your important
+                    contact information in one place.
+                </p>
+
+            </div>
+
+            <!-- About Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-20">
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-md
+                    border border-slate-200 dark:border-slate-700">
+
+                    <h2 class="text-2xl font-bold text-slate-900
+                        dark:text-white mb-5">
+                        What is ContactSphere?
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        ContactSphere provides a simple and organized way
+                        to manage personal and professional contacts.
+                    </p>
+
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Users can save contact details, manage their
+                        favourite contacts and securely access their information.
+                    </p>
+
+                </div>
+
+                <div class="bg-blue-600 rounded-2xl p-8 md:p-10 text-white shadow-lg">
+
+                    <h2 class="text-2xl font-bold mb-5">
+                        Our Goal
+                    </h2>
+
+                    <p class="text-blue-100 leading-relaxed text-lg">
+                        Our goal is to make contact management easy,
+                        organized and secure by bringing important
+                        contact information together in one place.
+                    </p>
+
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        <span class="bg-white/15 px-4 py-2 rounded-lg text-sm">
+                            Simple
+                        </span>
+
+                        <span class="bg-white/15 px-4 py-2 rounded-lg text-sm">
+                            Secure
+                        </span>
+
+                        <span class="bg-white/15 px-4 py-2 rounded-lg text-sm">
+                            Organized
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Features Section -->
+            <div class="mb-20">
+
+                <div class="text-center mb-10">
+
+                    <h2 class="text-3xl font-bold text-slate-900
+                        dark:text-white mb-3">
+                        What You Can Do
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-400">
+                        Everything you need to manage your contacts efficiently.
+                    </p>
+
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Feature 1 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl
+                        border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                        <div class="text-3xl mb-4">📇</div>
+
+                        <h3 class="text-xl font-semibold text-slate-900
+                            dark:text-white mb-3">
+                            Contact Management
+                        </h3>
+
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Add, update, view and organize your contacts easily.
+                        </p>
+
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl
+                        border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                        <div class="text-3xl mb-4">🔐</div>
+
+                        <h3 class="text-xl font-semibold text-slate-900
+                            dark:text-white mb-3">
+                            Secure Authentication
+                        </h3>
+
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Secure account access with Spring Security
+                            and authentication features.
+                        </p>
+
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl
+                        border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                        <div class="text-3xl mb-4">⭐</div>
+
+                        <h3 class="text-xl font-semibold text-slate-900
+                            dark:text-white mb-3">
+                            Favourite Contacts
+                        </h3>
+
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Mark important contacts as favourites
+                            for quick access.
+                        </p>
+
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl
+                        border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                        <div class="text-3xl mb-4">📧</div>
+
+                        <h3 class="text-xl font-semibold text-slate-900
+                            dark:text-white mb-3">
+                            Email Verification
+                        </h3>
+
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Verify your email address during
+                            account registration.
+                        </p>
+
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl
+                        border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                        <div class="text-3xl mb-4">🌐</div>
+
+                        <h3 class="text-xl font-semibold text-slate-900
+                            dark:text-white mb-3">
+                            Social Login
+                        </h3>
+
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Sign in conveniently using Google
+                            and GitHub authentication.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Technology Section -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 md:p-10
+                border border-slate-200 dark:border-slate-700 shadow-sm">
+
+                <div class="text-center mb-8">
+
+                    <h2 class="text-3xl font-bold text-slate-900
+                        dark:text-white mb-3">
+                        Built With Modern Technologies
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-400">
+                        Technologies powering ContactSphere.
+                    </p>
+
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3">
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Java
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Spring Boot
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Spring Security
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        MySQL
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Hibernate
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Thymeleaf
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        Tailwind CSS
+                    </span>
+
+                    <span class="px-5 py-3 rounded-lg bg-blue-100
+                        dark:bg-blue-900/40 text-blue-800
+                        dark:text-blue-300 font-semibold">
+                        JavaScript
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
-        <script>
-            console.log("about page");
-        </script>
-        <script>
-            console.log("second about page")
-        </script>
-    </body>
+
+    </section>
+
+</div>
+
+<script>
+    console.log("About page loaded");
+</script>
+
+</body>
 </html>
